@@ -4,19 +4,19 @@ import styles from "./styles";
 
 interface ItemFlatListProps {
   title: string;
-  datetime: string;
+  subtitle: string;
   value: string;
-  icon: string;
+  icon?: string;
 }
 
-const ItemFlatList: React.FC<ItemFlatListProps> = ({title, value, icon, datetime}) => (
+const ItemFlatList: React.FC<ItemFlatListProps> = ({title, value, icon, subtitle}) => (
   <View style={styles.mainContainer}>
     <View style={styles.iconView}>
-      <Image style={styles.iconImage} source={require('../../../public/uber_logo.png')} />
+      <Image style={styles.iconImage} source={icon || require('../../../public/not_found.png')} />
     </View>
-    <View style={styles.titleDateView}>
+    <View style={styles.titleView}>
       <Text style={styles.titleText}>{title}</Text>
-      <Text style={styles.datetimeText}>{datetime}</Text>
+      <Text style={styles.subtitleText}>{subtitle}</Text>
     </View>
     <View style={styles.valueView}>
       <Text style={styles.valueText}>{value}</Text>

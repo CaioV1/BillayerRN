@@ -1,9 +1,9 @@
 import React from "react"
-import { Button, FlatList, Text, View } from "react-native"
+import { Button, FlatList, ScrollView, ScrollViewComponent, Text, View } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-import Transaction from "../../models/Transaction";
-import RootStackParamList from "../../models/RootScreensParams"
+import Transaction from "../../models/interfaces/Transaction";
+import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { ItemFlatList } from "../../components";
 import { getDefaultDatetimeFormatText } from "../../utils/date.util";
@@ -19,17 +19,15 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
         key={transaction.id}
         title={transaction.name} 
         value={transaction.value.toString()} 
-        icon="ola.png"
-        datetime={getDefaultDatetimeFormatText(transaction.createdAt)} 
+        subtitle={getDefaultDatetimeFormatText(transaction.createdAt)} 
       />
     )
   }
 
   return (
-    <View>
-      <Text>Título Transações</Text>
+    <View style={{flex: 1, paddingTop: 10, paddingBottom: 20}}>
       <FlatList data={transactionsMock} renderItem={({item}) => renderTransactions(item)} />
-      <Button title="Ir" onPress={() => {
+      <Button title="Add Transaction" onPress={() => {
         navigation.navigate('Balance');
       }}/>
     </View>

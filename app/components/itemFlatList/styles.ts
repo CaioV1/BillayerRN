@@ -2,13 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: 40,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
-    paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#CCCCCC',
   },
@@ -20,17 +17,18 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40
   },
-  titleDateView: {
-    width: '60%',
+  titleView: {
+    width: '55%',
+    marginVertical: 10,
   },
   valueView: {
-    width: '25%',
+    width: '30%',
     paddingRight: 10,
   },
   titleText: {
     fontSize: 16
   },
-  datetimeText: {
+  subtitleText: {
     fontSize: 10
   },
   valueText: {

@@ -1,5 +1,5 @@
 export default interface Transaction {
-  id: number;
+  _id: Realm.BSON.ObjectId;
   name: string;
   value: number;
   categoryId: number;

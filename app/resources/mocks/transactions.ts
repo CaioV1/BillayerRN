@@ -1,4 +1,4 @@
-import Transaction from "../../models/Transaction";
+import Transaction from "../../models/interfaces/Transaction";
 
 export const transactionsMock: Array<Transaction> = [
   {

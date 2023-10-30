@@ -1,4 +1,4 @@
-import Route from "./models/Route";
+import Route from "./models/interfaces/Route";
 import { BalanceScreen, TransactionsScreen } from "./screens";
 
 const routes: Array<Route> = [
