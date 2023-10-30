@@ -1,7 +1,5 @@
 import Route from "./models/Route";
-
-import Balance from "./screens/balance";
-import TransactionsScreen from "./screens/transactions";
+import { BalanceScreen, TransactionsScreen } from "./screens";
 
 const routes: Array<Route> = [
   {
@@ -12,7 +10,7 @@ const routes: Array<Route> = [
   {
     name: 'Balance',
     title: 'Balance',
-    component: Balance
+    component: BalanceScreen
   }
 ];
 
