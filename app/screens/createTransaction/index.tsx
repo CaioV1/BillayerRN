@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Alert, Button, TextInput, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import ITransaction from '../../models/interfaces/Transaction';
+import RootStackParamList from '../../models/interfaces/RootScreensParams';
+
 import { RealContext } from '../../configs/RealmContext';
 
-import ITransaction from '../../models/interfaces/Transaction';
-import Transaction from '../../models/schemas/TransactionSchema';
-import RootStackParamList from '../../models/interfaces/RootScreensParams';
 import { styles } from '../../resources/styles/form.style';
 
 const { useRealm } = RealContext;
@@ -25,7 +25,6 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ navig
   }
 
   const onButtonPress = () => {
-    console.log(transaction)
     if(!transaction?.name){
       Alert.alert("Please fill the transaction's name");
       return;
@@ -40,10 +39,6 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ navig
       Alert.alert("Please fill the transaction's category ID");
       return;
     }
-
-    console.log(typeof transaction.value)
-
-    console.log('isNaN', Number.isNaN(transaction.value))
 
     const pattern = /^-?\d+(\.\d+)?$/;
     if(!pattern.test(transaction.value.toString())){

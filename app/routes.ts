@@ -1,5 +1,5 @@
 import Route from "./models/interfaces/Route";
-import { BalanceScreen, CreateTransactionScreen, TransactionsScreen } from "./screens";
+import { BalanceScreen, CreateCategoryScreen, CreateTransactionScreen, TransactionsScreen } from "./screens";
 
 const routes: Array<Route> = [
   {
@@ -16,6 +16,11 @@ const routes: Array<Route> = [
     name: 'CreateTransaction',
     title: 'Create Transaction',
     component: CreateTransactionScreen
+  },
+  {
+    name: 'CreateCategory',
+    title: 'Create Category',
+    component: CreateCategoryScreen
   },
 ];
 

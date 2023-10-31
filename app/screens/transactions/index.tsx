@@ -3,12 +3,12 @@ import { Button, FlatList, View } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import ITransaction from "../../models/interfaces/Transaction";
+import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { ItemFlatList } from "../../components";
 import { RealContext } from "../../configs/RealmContext";
 import { getDefaultDatetimeFormatText } from "../../utils/date.util";
-import Transaction from "../../models/schemas/TransactionSchema";
 
 const { useRealm, useQuery } = RealContext;
 

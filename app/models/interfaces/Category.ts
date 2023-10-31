@@ -1,7 +1,7 @@
 export default interface Category {
-  id: number;
+  _id: Realm.BSON.ObjectId;
   name: string;
   iconId: number;
   budget: number;
-  totalExpense: number;
+  totalExpense?: number;
 }
