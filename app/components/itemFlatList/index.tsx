@@ -12,7 +12,7 @@ interface ItemFlatListProps {
 const ItemFlatList: React.FC<ItemFlatListProps> = ({title, value, icon, subtitle}) => (
   <View style={styles.mainContainer}>
     <View style={styles.iconView}>
-      <Image style={styles.iconImage} source={icon || require('../../../public/not_found.png')} />
+      <Image style={styles.iconImage} source={icon ? {uri: icon} : require('../../../public/not_found.png')} />
     </View>
     <View style={styles.titleView}>
       <Text style={styles.titleText}>{title}</Text>

@@ -1,7 +1,7 @@
 export default interface Category {
   id: number;
   name: string;
-  icon: any;
+  iconId: number;
   budget: number;
   totalExpense: number;
 }

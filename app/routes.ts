@@ -3,6 +3,11 @@ import { BalanceScreen, CreateTransactionScreen, TransactionsScreen } from "./sc
 
 const routes: Array<Route> = [
   {
+    name: 'Balance',
+    title: 'Balance',
+    component: BalanceScreen
+  },
+  {
     name: 'Transactions',
     title: 'Transactions',
     component: TransactionsScreen
@@ -11,11 +16,6 @@ const routes: Array<Route> = [
     name: 'CreateTransaction',
     title: 'Create Transaction',
     component: CreateTransactionScreen
-  },
-  {
-    name: 'Balance',
-    title: 'Balance',
-    component: BalanceScreen
   },
 ];
 

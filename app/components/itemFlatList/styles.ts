@@ -6,24 +6,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#CCCCCC',
   },
   iconView: {
-    width: '15%',
-    paddingLeft: 10,
+    width: '12%',
+    borderWidth: 2,
+    borderRadius: 30,
+    backgroundColor: '#fccf65',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconImage: {
-    height: 40,
-    width: 40
+    height: 30,
+    width: 30,
+    margin: 5
   },
   titleView: {
-    width: '55%',
+    width: '58%',
     marginVertical: 10,
+    paddingLeft: 10,
   },
   valueView: {
     width: '30%',
-    paddingRight: 10,
   },
   titleText: {
     fontSize: 16

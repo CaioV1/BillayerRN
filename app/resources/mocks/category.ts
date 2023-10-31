@@ -4,35 +4,56 @@ export const categoryMock: Array<Category> = [
   {
     id: 1,
     name: 'Transport',
-    icon: require('../../../public/transport.png'),
+    iconId: 6,
     budget: 100,
     totalExpense: 50
   },
   {
     id: 2,
     name: 'Meal',
-    icon: require('../../../public/meal.png'),
+    iconId: 1,
     budget: 2500,
     totalExpense: 80
   },
   {
     id: 3,
     name: 'Streaming',
-    icon: require('../../../public/streaming.png'),
+    iconId: 5,
     budget: 70,
     totalExpense: 90
   },
   {
     id: 4,
     name: 'Unforeseen',
-    icon: require('../../../public/unforeseen.png'),
+    iconId: 7,
     budget: 600,
     totalExpense: 470
   },
   {
     id: 5,
+    name: 'Internet',
+    iconId: 2,
+    budget: 600,
+    totalExpense: 470
+  },
+  {
+    id: 6,
     name: 'Fixed',
-    icon: require('../../../public/fixed.png'),
+    iconId: 3,
+    budget: 600,
+    totalExpense: 470
+  },
+  {
+    id: 7,
+    name: 'Personal Care',
+    iconId: 4,
+    budget: 600,
+    totalExpense: 470
+  },
+  {
+    id: 8,
+    name: 'Study',
+    iconId: 8,
     budget: 600,
     totalExpense: 470
   },

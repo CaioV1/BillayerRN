@@ -7,6 +7,7 @@ import { ItemFlatList } from "../../components";
 import { categoryMock } from "../../resources/mocks/category";
 import Category from "../../models/interfaces/Category";
 import { convertToMoney } from "../../utils/string.util";
+import { listImgBase64 } from "../../resources/static/imgBase64";
 
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
@@ -17,8 +18,8 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
         key={category.id}
         title={category.name} 
         value={convertToMoney(category.budget - category.totalExpense)} 
-        icon="ola.png"
-        subtitle={`Orçamento: ${convertToMoney(category.budget)} \nGasto total: ${convertToMoney(category.totalExpense)} `} 
+        icon={listImgBase64.find((imgBase64) => imgBase64.id === category.iconId)?.data}
+        subtitle={`Budget: ${convertToMoney(category.budget)} \nExpenses: ${convertToMoney(category.totalExpense)} `} 
       />
     )
   }
