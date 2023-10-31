@@ -1,5 +1,5 @@
 import Route from "./models/interfaces/Route";
-import { BalanceScreen, TransactionsScreen } from "./screens";
+import { BalanceScreen, CreateTransactionScreen, TransactionsScreen } from "./screens";
 
 const routes: Array<Route> = [
   {
@@ -8,10 +8,15 @@ const routes: Array<Route> = [
     component: TransactionsScreen
   },
   {
+    name: 'CreateTransaction',
+    title: 'Create Transaction',
+    component: CreateTransactionScreen
+  },
+  {
     name: 'Balance',
     title: 'Balance',
     component: BalanceScreen
-  }
+  },
 ];
 
 export default routes;

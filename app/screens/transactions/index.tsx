@@ -1,24 +1,41 @@
-import React from "react"
-import { Button, FlatList, ScrollView, ScrollViewComponent, Text, View } from "react-native"
+import React, { useEffect } from "react"
+import { Button, FlatList, View } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-import Transaction from "../../models/interfaces/Transaction";
+import ITransaction from "../../models/interfaces/Transaction";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { ItemFlatList } from "../../components";
+import { RealContext } from "../../configs/RealmContext";
 import { getDefaultDatetimeFormatText } from "../../utils/date.util";
-import { transactionsMock } from "../../resources/mocks/transactions";
+import Transaction from "../../models/schemas/TransactionSchema";
+
+const { useRealm, useQuery } = RealContext;
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 
 const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) => {
+  const realm = useRealm();
+  const response = useQuery(Transaction);
 
-  const renderTransactions = (transaction: Transaction) => {
+  // console.log(response[0]._id);
+
+  // const deleteTransaction = (transaction: ITransaction) => {
+  //   realm.write(() => {
+  //     realm.delete(transaction);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   deleteTransaction(response[0]);
+  // }, [])
+
+  const renderTransactions = (transaction: ITransaction) => {
     return (
       <ItemFlatList 
-        key={transaction.id}
+        key={transaction._id.toString()}
         title={transaction.name} 
-        value={transaction.value.toString()} 
+        value={'10'} 
         subtitle={getDefaultDatetimeFormatText(transaction.createdAt)} 
       />
     )
@@ -26,9 +43,9 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
 
   return (
     <View style={{flex: 1, paddingTop: 10, paddingBottom: 20}}>
-      <FlatList data={transactionsMock} renderItem={({item}) => renderTransactions(item)} />
+      <FlatList data={response} renderItem={({item}) => renderTransactions(item)} />
       <Button title="Add Transaction" onPress={() => {
-        navigation.navigate('Balance');
+        navigation.navigate('CreateTransaction');
       }}/>
     </View>
   )

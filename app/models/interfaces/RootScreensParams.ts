@@ -1,6 +1,7 @@
 type RootStackParamList = {
   Transactions: undefined;
   Balance: undefined;
+  CreateTransaction: undefined;
   Profile: { userId: string };
   Feed: { sort: 'latest' | 'top' } | undefined;
 };
