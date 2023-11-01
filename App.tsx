@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import routes from './app/routes';
-import { RealContext } from './app/configs/RealmContext';
+import { RealmContext } from './app/configs/RealmContext';
 import { NativeBaseProvider } from 'native-base';
 
 const Stack = createNativeStackNavigator();
 
 const App: React.FC = () => {
-  const { RealmProvider } = RealContext;
+  const { RealmProvider } = RealmContext;
   return (
     <NavigationContainer>
       <RealmProvider>

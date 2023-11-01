@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Button, FlatList, View } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
@@ -7,36 +7,25 @@ import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { ItemFlatList } from "../../components";
-import { RealContext } from "../../configs/RealmContext";
-import { getDefaultDatetimeFormatText } from "../../utils/date.util";
+import { RealmContext } from "../../configs/RealmContext";
+import { listImgBase64 } from "../../resources/static/imgBase64";
+import { convertToMoney } from "../../utils/string.util";
 
-const { useRealm, useQuery } = RealContext;
+const { useRealm, useQuery } = RealmContext;
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 
 const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) => {
-  const realm = useRealm();
   const response = useQuery(Transaction);
-
-  // console.log(response[0]._id);
-
-  // const deleteTransaction = (transaction: ITransaction) => {
-  //   realm.write(() => {
-  //     realm.delete(transaction);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   deleteTransaction(response[0]);
-  // }, [])
 
   const renderTransactions = (transaction: ITransaction) => {
     return (
       <ItemFlatList 
         key={transaction._id.toString()}
         title={transaction.name} 
-        value={'10'} 
-        subtitle={getDefaultDatetimeFormatText(transaction.createdAt)} 
+        value={convertToMoney(transaction.value)} 
+        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.category.iconId)?.data}
+        subtitle={transaction.createdAt} 
       />
     )
   }

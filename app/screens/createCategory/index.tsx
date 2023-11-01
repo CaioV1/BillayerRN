@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, TextInput, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-import { RealContext } from "../../configs/RealmContext";
+import { RealmContext } from "../../configs/RealmContext";
 import { styles } from "../../resources/styles/form.style";
 
 import ICategory from '../../models/interfaces/Category';
@@ -12,7 +12,7 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 import { ImageSelector } from "../../components";
 import { listImgBase64 } from "../../resources/static/imgBase64";
 
-const { useRealm } = RealContext;
+const { useRealm } = RealmContext;
 
 type CreateCategoryScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateCategory'>;
 

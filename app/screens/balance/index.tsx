@@ -6,32 +6,18 @@ import ICategory from "../../models/interfaces/Category";
 import Category from "../../models/schemas/CategorySchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { categoryMock } from "../../resources/mocks/category";
 import { listImgBase64 } from "../../resources/static/imgBase64";
 
 import { ItemFlatList } from "../../components";
-import { RealContext } from "../../configs/RealmContext";
+import { RealmContext } from "../../configs/RealmContext";
 import { convertToMoney } from "../../utils/string.util";
 
-const { useRealm, useQuery } = RealContext;
+const { useQuery } = RealmContext;
 
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
 const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
-  const realm = useRealm();
   const response = useQuery(Category);
-
-  console.log(response[0]);
-
-  // const deleteTransaction = (transaction: ITransaction) => {
-  //   realm.write(() => {
-  //     realm.delete(transaction);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   deleteTransaction(response[0]);
-  // }, [])
 
   const renderCategories = (category: ICategory) => {
     return (
@@ -50,6 +36,9 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
       <FlatList data={response} renderItem={({item}) => renderCategories(item)} />
       <Button title="Add Category" onPress={() => {
         navigation.navigate('CreateCategory');
+      }}/>
+      <Button title="Transactions" onPress={() => {
+        navigation.navigate('Transactions');
       }}/>
      </View> 
   )
