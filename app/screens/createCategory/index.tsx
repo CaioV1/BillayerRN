@@ -6,7 +6,11 @@ import { RealContext } from "../../configs/RealmContext";
 import { styles } from "../../resources/styles/form.style";
 
 import ICategory from '../../models/interfaces/Category';
+import ImageBase64 from "../../models/interfaces/ImageBase64";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
+
+import { ImageSelector } from "../../components";
+import { listImgBase64 } from "../../resources/static/imgBase64";
 
 const { useRealm } = RealContext;
 
@@ -30,10 +34,10 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation 
       return;
     }
 
-    // if(!category?.iconId){
-    //   Alert.alert("Please select the icon");
-    //   return;
-    // }
+    if(!category?.iconId){
+      Alert.alert("Please select the icon");
+      return;
+    }
 
     if(!category?.budget){
       Alert.alert("Please fill the category's budget");
@@ -50,7 +54,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation 
       realm.create('Category', { 
         _id: new Realm.BSON.ObjectID(),
         name: category.name!,
-        iconId: 1,
+        iconId: parseInt(category.iconId!.toString()),
         budget: parseInt(category.budget!.toString())
       })
     });
@@ -59,9 +63,10 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation 
   }
 
   return (
-    <View>
+    <View style={{flex: 1, marginVertical: 20}}>
       <TextInput style={styles.inputText} placeholder='Category name' onChangeText={(text: string) => onChange('name', text)} />
       <TextInput style={styles.inputText} placeholder='Category budget' onChangeText={(text: string) => onChange('budget', text)} keyboardType='numeric'/>
+      <ImageSelector listImageInfo={listImgBase64} onPress={(item: ImageBase64) => onChange('iconId', item.id)} />
       <Button title='Register' onPress={onButtonPress}/>
     </View>
   )

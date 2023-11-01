@@ -1,4 +1,6 @@
-export const listImgBase64 = [
+import ImageBase64 from "../../models/interfaces/ImageBase64";
+
+export const listImgBase64: Array<ImageBase64> = [
   {
     id: 1,
     name: 'Meal',

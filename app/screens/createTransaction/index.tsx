@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckIcon, Select } from "native-base";
 import { Alert, Button, TextInput, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -61,6 +62,22 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ navig
 
   return (
     <View>
+      <Select 
+        mt={1}
+        minWidth="200" 
+        accessibilityLabel="Choose Service" 
+        placeholder="Choose Service" 
+        onValueChange={itemValue => console.log(itemValue)}
+        _selectedItem={{
+          bg: "teal.600",
+          endIcon: <CheckIcon size="5" />
+        }}>
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
       <TextInput style={styles.inputText} placeholder='Transaction title' onChangeText={(text: string) => onChange('name', text)} />
       <TextInput style={styles.inputText} placeholder='Transaction value' onChangeText={(text: string) => onChange('value', text)} keyboardType='numeric'/>
       <TextInput style={styles.inputText} placeholder='Category ID' onChangeText={(text: string) => onChange('categoryId', text)} keyboardType='numeric'/>

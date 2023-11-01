@@ -33,7 +33,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
   //   deleteTransaction(response[0]);
   // }, [])
 
-  const renderTransactions = (category: ICategory) => {
+  const renderCategories = (category: ICategory) => {
     return (
       <ItemFlatList 
         key={category._id.toString()}
@@ -47,7 +47,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
   
   return (
     <View style={{flex: 1, paddingTop: 10, paddingBottom: 20}}>
-      <FlatList data={response} renderItem={({item}) => renderTransactions(item)} />
+      <FlatList data={response} renderItem={({item}) => renderCategories(item)} />
       <Button title="Add Category" onPress={() => {
         navigation.navigate('CreateCategory');
       }}/>
