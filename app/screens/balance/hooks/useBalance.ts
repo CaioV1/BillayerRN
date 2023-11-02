@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import ICategory from "../../../models/interfaces/Category";
@@ -15,31 +15,27 @@ const { useQuery } = RealmContext;
 const useBalance = (navigation: NativeStackNavigationProp<RootStackParamList, "Balance">) => {
   const listCategory = useQuery(Category);
   const listBalance = useQuery(Balance);
-  const listTransaction = useQuery(Transaction);
+
+  const [totalBudget, setTotalBudget] = useState<number>(0);
+  const [allExpensesValue, setAllExpensesValue] = useState<number>(0);
 
   useContext(AppConfigContext);
 
   useEffect(() => {
-    console.log('listBalance', listBalance);
-    console.log('listCategory', listCategory);
-  }, []);
+    getAllValues();
+  });
 
-  const getExpensesBalance = (category: ICategory) => {
-    const transactionsByCategory = listTransaction.filtered('category._id == $0', category._id);
-    const totalExpenses = transactionsByCategory.reduce((acc, transaction) => {
-      return acc + transaction.value;
-    }, 0);
-
-    return {
-      totalExpenses,
-      balance: category.budget - totalExpenses
-    }
+  const getAllValues = () => {
+    setTotalBudget(listCategory.reduce((acc, category) => acc + category.budget, 0));
+    setAllExpensesValue(listBalance.reduce((acc, balance) => acc + balance.totalExpenses, 0));
   }
 
   return {
     listCategory,
     listBalance,
-    getExpensesBalance
+    totalBudget,
+    allExpensesValue,
+    getAllValues
   }
 }
 

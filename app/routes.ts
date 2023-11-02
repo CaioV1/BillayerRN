@@ -4,7 +4,7 @@ import { BalanceScreen, CreateCategoryScreen, CreateTransactionScreen, Transacti
 const routes: Array<Route> = [
   {
     name: 'Balance',
-    title: 'Balance',
+    title: 'Billayer',
     component: BalanceScreen
   },
   {
