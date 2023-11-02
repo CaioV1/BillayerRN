@@ -1,24 +1,29 @@
 import { Alert } from "react-native";
-import { useEffect, useState } from "react";
+import { Results } from "realm/dist/bundle";
+import { useContext, useEffect, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import Category from "../../../models/schemas/CategorySchema";
+import Balance from "../../../models/schemas/BalanceSchema";
 import ITransaction from '../../../models/interfaces/Transaction';
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import { RealmContext } from "../../../configs/RealmContext";
-import { getDefaultDatetimeFormatText } from "../../../utils/date.util";
+import { getDefaultDateFormat } from "../../../utils/date.util";
+import { AppConfigContext } from "../../../context/appConfig.context";
 
 const { useRealm, useQuery } = RealmContext;
 
 const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackParamList, "CreateTransaction", undefined>) => {
-  const [transaction, setTransaction] = useState<Partial<ITransaction>>();
   const realm = useRealm();
-  const listCategory = useQuery(Category);
+  const fullListBalance = useQuery(Balance);
+  const { appConfig } = useContext(AppConfigContext);
+
+  const [transaction, setTransaction] = useState<Partial<ITransaction>>();
+  const [listBalance, setListBalance] = useState<Results<Balance>>();
 
   useEffect(() => {
-    console.log(transaction);
-  }, [transaction]);
+    setListBalance(fullListBalance.filtered('dueDate == $0', appConfig.dateToRenewBalance));
+  }, [])
 
   const onChange = (key: string, value: any) => {
     setTransaction((previouValue) => ({
@@ -28,11 +33,11 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
   }
 
   const onCategorySelected = (_id: string) => {
-    const category = listCategory.find((category) => category._id.toString() === _id);
+    const balance = listBalance!.find((balance) => balance._id.toString() === _id);
 
-    if(category) setTransaction((previouValue) => ({
+    if(balance) setTransaction((previouValue) => ({
       ...previouValue,
-      category
+      balance
     }));
   }
 
@@ -47,7 +52,7 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
       return;
     }
 
-    if(!transaction?.category){
+    if(!transaction?.balance){
       Alert.alert("Please select a category");
       return;
     }
@@ -58,14 +63,20 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
       return;
     }
 
+    const balance = realm.objectForPrimaryKey<Balance>('Balance', transaction.balance._id);
+
     realm.write(() => {
+      const floatValue = parseFloat(transaction.value!.toString())
       realm.create('Transaction', { 
-        _id: new Realm.BSON.ObjectID(),
         name: transaction.name!,
-        value: parseFloat(transaction.value!.toString()),
-        category: transaction.category,
-        createdAt: getDefaultDatetimeFormatText(new Date())
-      })
+        value: floatValue,
+        balance: transaction.balance,
+        createdAt: getDefaultDateFormat(new Date())
+      });
+
+      if(balance){
+        balance.totalExpenses = balance.totalExpenses + floatValue;
+      }
     });
 
     navigation.goBack();
@@ -73,7 +84,7 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
 
   return {
     transaction,
-    listCategory,
+    listBalance,
     onCategorySelected,
     onChange,
     onButtonPress  

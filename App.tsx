@@ -1,10 +1,11 @@
 import React from 'react';
+import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import routes from './app/routes';
 import { RealmContext } from './app/configs/RealmContext';
-import { NativeBaseProvider } from 'native-base';
+import AppConfigContextProvider from './app/context/appConfig.context';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,18 +15,20 @@ const App: React.FC = () => {
     <NavigationContainer>
       <RealmProvider>
         <NativeBaseProvider>
-          <Stack.Navigator>
-            {routes.map((route) => (
-              <Stack.Screen
-                key={route.name}
-                name={route.name} 
-                component={route.component}
-                options={{
-                  title: route.title
-                }}
-              />
-            ))}
-          </Stack.Navigator>
+          <AppConfigContextProvider>
+            <Stack.Navigator>
+              {routes.map((route) => (
+                <Stack.Screen
+                  key={route.name}
+                  name={route.name} 
+                  component={route.component}
+                  options={{
+                    title: route.title
+                  }}
+                />
+              ))}
+            </Stack.Navigator>
+          </AppConfigContextProvider>
         </NativeBaseProvider>
       </RealmProvider>
     </NavigationContainer>

@@ -24,7 +24,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
         key={transaction._id.toString()}
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.category.iconId)?.data}
+        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
         subtitle={transaction.createdAt} 
       />
     )

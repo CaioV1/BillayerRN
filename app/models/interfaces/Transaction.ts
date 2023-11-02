@@ -1,9 +1,10 @@
-import Category from "../schemas/CategorySchema";
+import Realm from "realm";
+import Balance from "../schemas/BalanceSchema";
 
 export default interface Transaction {
-  _id: Realm.BSON.ObjectId;
+  _id: Realm.BSON.UUID;
   name: string;
   value: number;
-  category: Category;
+  balance: Balance;
   createdAt: string;
 }

@@ -1,31 +1,33 @@
 import Realm, { ObjectSchema } from "realm";
 
+import Balance from "./BalanceSchema";
 import ITransaction from '../interfaces/Transaction';
-import Category from "./CategorySchema";
 
 export default class Transaction extends Realm.Object<Transaction> implements ITransaction {
-  _id!: Realm.BSON.ObjectId;
-  name: string;
-  value: number;
-  category: Category;
-  createdAt: string;
+  constructor(
+    realm: Realm, 
+    public _id: Realm.BSON.UUID, 
+    public name: string, 
+    public value: number, 
+    public balance: Balance, 
+    public createdAt: string
+  ){
+    super(realm, { _id, name, value, balance, createdAt });
 
-  constructor(realm: Realm, name: string, value: number, category: Category, createdAt: string){
-    super(realm, { name, value, category, createdAt });
-
+    this._id = _id;
     this.name = name;
     this.value = value;
-    this.category = category;
+    this.balance = balance;
     this.createdAt = createdAt;
   }
 
   static schema: ObjectSchema = {
     name: 'Transaction',
     properties: {
-      _id: 'objectId',
+      _id: { type: 'uuid', default: () => new Realm.BSON.UUID() },
       name: 'string',
       value: 'float',
-      category: 'Category',
+      balance: 'Balance?',
       createdAt: 'string'
     },
     primaryKey: '_id'

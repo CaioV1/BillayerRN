@@ -1,35 +1,30 @@
-import { ObjectId } from 'bson';
-import { ObjectSchema } from 'realm';
+import Realm, { ObjectSchema } from 'realm';
 
 import ICategory from '../interfaces/Category';
 
 export default class Category extends Realm.Object<Category> implements ICategory {
-  _id!: ObjectId;
-  name: string;
-  iconId: number;
-  budget: number;
-  totalExpense?: number;
+  constructor(
+    realm: Realm, 
+    public _id: Realm.BSON.UUID,
+    public name: string, 
+    public iconId: number, 
+    public budget: number
+  ){
+    super(realm, { _id, name, iconId, budget });
 
-  constructor(realm: Realm, name: string, iconId: number, budget: number, totalExpense?: number){
-    super(realm, { name, iconId, budget, totalExpense });
-
+    this._id = _id;
     this.name = name;
     this.iconId = iconId;
     this.budget = budget;
-    this.totalExpense = totalExpense;
   }
 
   static schema: ObjectSchema = {
     name: 'Category',
     properties: {
-      _id: 'objectId',
+      _id: { type: 'uuid', default: () => new Realm.BSON.UUID() },
       name: 'string',
       iconId: 'int',
-      budget: 'float',
-      totalExpense: {
-        type: 'float',
-        optional: true
-      }
+      budget: 'float'
     },
     primaryKey: '_id'
   }
