@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { DEFAULT_BLACK, DEFAULT_BLUE } from '../../resources/values/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -8,13 +9,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
+    borderBottomColor: DEFAULT_BLACK,
   },
   iconView: {
     width: '12%',
     borderWidth: 2,
     borderRadius: 30,
-    backgroundColor: '#fccf65',
+    backgroundColor: DEFAULT_BLUE,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

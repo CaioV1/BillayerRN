@@ -8,7 +8,7 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 import { ImageSelector } from "../../components";
 
 import { styles } from "../../resources/styles/form.style";
-import { listImgBase64 } from "../../resources/static/imgBase64";
+import { listImgBase64 } from "../../resources/static/categoriesImages";
 
 import useCreateCategory from "./hooks/useCreateCategory";
 

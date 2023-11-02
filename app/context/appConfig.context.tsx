@@ -12,7 +12,8 @@ const { useRealm, useQuery } = RealmContext;
 export const AppConfigContext = createContext({
   appConfig: {
     dateToRenewBalance: ''
-  }
+  },
+  createNewBalances: () => {}
 });
 
 interface AppConfigContextProviderProps {
@@ -33,11 +34,9 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
     // });
   }, [])
 
-  useEffect(() => {
-    console.log(appConfig);
-    appConfig && console.log(isDateSameOrAfterToday(appConfig.dateToRenewBalance))
-    appConfig && isDateSameOrAfterToday(appConfig.dateToRenewBalance) && createNewBalances();
-  }, [appConfig])
+  // useEffect(() => {
+  //   appConfig && isDateSameOrAfterToday(appConfig.dateToRenewBalance) && createNewBalances();
+  // }, [appConfig])
 
   const createConfigIfDoesntExist = () => {
     if(response.length > 0){
@@ -74,7 +73,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   }
 
   return (
-    <AppConfigContext.Provider value={{ appConfig: appConfig! }}>
+    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances }}>
       {children}
     </AppConfigContext.Provider>
   )

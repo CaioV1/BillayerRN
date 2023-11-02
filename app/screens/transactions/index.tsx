@@ -8,7 +8,7 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { ItemFlatList } from "../../components";
 import { RealmContext } from "../../configs/RealmContext";
-import { listImgBase64 } from "../../resources/static/imgBase64";
+import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { convertToMoney } from "../../utils/string.util";
 
 const { useRealm, useQuery } = RealmContext;

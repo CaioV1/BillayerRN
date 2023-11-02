@@ -1,15 +1,17 @@
 import React from "react";
-import { Button, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import IBalance from "../../models/interfaces/Balance";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { ItemFlatList } from "../../components";
+import { ImageButton, ItemFlatList } from "../../components";
 import { convertToMoney } from "../../utils/string.util";
-import { listImgBase64 } from "../../resources/static/imgBase64";
+import { listImgBase64 } from "../../resources/static/categoriesImages";
 
+import { styles } from "./styles";
 import useBalance from "./hooks/useBalance";
+import { listMenu } from "../../resources/static/menuBalance";
 
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
@@ -27,16 +29,17 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
       />
     )
   }
+
+  const renderTopButtons = (item) => {
+    return (
+      <ImageButton buttonTitle={item.name} imageBase64={item.data} onPress={() => console.log('Button Event')} />
+    )
+  }
   
   return (
-    <View style={{flex: 1, paddingTop: 10, paddingBottom: 20}}>
+    <View style={styles.viewContainer}>
+      <FlatList style={styles.flatListMenu} showsHorizontalScrollIndicator={false} data={listMenu} horizontal={true} renderItem={({item}) => renderTopButtons(item)} />
       <FlatList data={listBalance} renderItem={({item}) => renderCategories(item)} />
-      <Button title="Add Category" onPress={() => {
-        navigation.navigate('CreateCategory');
-      }}/>
-      <Button title="Transactions" onPress={() => {
-        navigation.navigate('Transactions');
-      }}/>
      </View> 
   )
 }
