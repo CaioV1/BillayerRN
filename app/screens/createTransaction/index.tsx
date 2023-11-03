@@ -36,6 +36,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ navig
         variant="underlined" 
         placeholder="Value" 
         keyboardType='numeric'
+        returnKeyType='done'
         onChangeText={(text: string) => onChange('value', text)} 
       />
       {

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { DEFAULT_BLUE } from "../../resources/values/colors";
+import { DEFAULT_BUTTON_COLOR } from "../../resources/values/colors";
 
 export const styles = StyleSheet.create({
   touchable: { 
@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   viewContainer: {
     width: '100%',
     height: 80,
-    backgroundColor: DEFAULT_BLUE,
+    backgroundColor: DEFAULT_BUTTON_COLOR,
     alignItems: 'center'
   },
   text: {

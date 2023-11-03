@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
+import { DEFAULT_BUTTON_COLOR } from '../../resources/values/colors';
+
 import ImageBase64 from "../../models/interfaces/ImageBase64";
 
 interface ImageSelectorProps {
@@ -18,7 +20,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, onPress })
   }
 
   const renderImages = (item: ImageBase64) => {
-    const imageViewStyle = imageSelected?.id === item.id ? { ...styles.imageView, backgroundColor: '#fccf65' } : styles.imageView;
+    const imageViewStyle = imageSelected?.id === item.id ? { ...styles.imageView, backgroundColor: DEFAULT_BUTTON_COLOR } : styles.imageView;
 
     return (
       <TouchableOpacity onPress={() => { onImageSelected(item) }}>
@@ -30,8 +32,12 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, onPress })
   }
   return (
     <View style={styles.componentView}>
-      <Text style={styles.textStyle}>Pick an icon</Text>
-      <FlatList showsVerticalScrollIndicator={false} data={listImageInfo} numColumns={2} renderItem={({item}) => renderImages(item)}/>
+      <View>
+        { listImageInfo.filter((_i, index) => index % 2 == 1).map((item) => renderImages(item)) }
+      </View>
+      <View>
+        { listImageInfo.filter((_i, index) => index % 2 == 0).map((item) => renderImages(item)) }
+      </View>
     </View>
   )
 }

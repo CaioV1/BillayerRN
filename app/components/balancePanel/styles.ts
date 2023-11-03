@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { DEFAULT_BLUE } from "../../resources/values/colors";
 
 export const styles = StyleSheet.create({
   componentView: {

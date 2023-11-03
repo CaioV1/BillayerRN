@@ -3,7 +3,9 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   componentView: { 
     flex: 1,
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center"
   },
   imageView: { 
     margin: 15,
@@ -13,11 +15,13 @@ export const styles = StyleSheet.create({
   image: {
     height: 35,
     width: 35,
-    margin: 30
+    marginVertical: 30,
+    marginHorizontal: 60
   },
   textStyle: {
     marginTop: 15,
     marginBottom: 5,
-    fontSize: 16
+    fontSize: 25,
+    textAlign: "left"
   }
 });

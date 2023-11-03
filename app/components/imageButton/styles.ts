@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
-import { DEFAULT_BLUE } from "../../resources/values/colors";
+import { DEFAULT_BUTTON_COLOR } from "../../resources/values/colors";
 
 export const styles = StyleSheet.create({
   componentView: { 
-    marginLeft: 30
+    marginLeft: 20
   },
   imageView: {
     height: 70,
     width: 70,
-    backgroundColor: DEFAULT_BLUE,
+    backgroundColor: DEFAULT_BUTTON_COLOR,
     display: 'flex',
     alignItems: "center",
     justifyContent: "center",

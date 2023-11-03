@@ -1,12 +1,12 @@
 import React from "react"
-import { Button, FlatList, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import ITransaction from "../../models/interfaces/Transaction";
 import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { ItemFlatList } from "../../components";
+import { BottomButton, ItemFlatList } from "../../components";
 import { RealmContext } from "../../configs/RealmContext";
 import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { convertToMoney } from "../../utils/string.util";
@@ -31,9 +31,13 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
   }
 
   return (
-    <View style={{flex: 1, paddingTop: 10, paddingBottom: 20}}>
-      <FlatList data={response} renderItem={({item}) => renderTransactions(item)} />
-      <Button title="Add Transaction" onPress={() => {
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
+        {
+          response.map((item) => renderTransactions(item))
+        }  
+      </ScrollView>
+      <BottomButton title="Add Transaction" onButtonPress={() => {
         navigation.navigate('CreateTransaction');
       }}/>
     </View>

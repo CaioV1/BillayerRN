@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import IBalance from "../../models/interfaces/Balance";
@@ -37,10 +37,14 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
   }
   
   return (
-    <View style={styles.viewContainer}>
-      <BalancePanel budget={totalBudget} totalExpenses={allExpensesValue} />
-      <FlatList style={styles.flatListMenu} showsHorizontalScrollIndicator={false} data={listMenu} horizontal={true} renderItem={({item}) => renderTopButtons(item)} />
-      <FlatList data={listBalance} renderItem={({item}) => renderCategories(item)} />
+    <View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <BalancePanel budget={totalBudget} totalExpenses={allExpensesValue} />
+        <FlatList style={styles.flatListMenu} showsHorizontalScrollIndicator={false} data={listMenu} horizontal={true} renderItem={({item}) => renderTopButtons(item)} />
+        {
+          listBalance.map((item) => renderCategories(item))
+        }
+      </ScrollView>
      </View> 
   )
 }
