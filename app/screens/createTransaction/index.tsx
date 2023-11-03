@@ -1,14 +1,15 @@
 import React from 'react';
-import { CheckIcon, Select } from "native-base";
-import { Button, TextInput, View } from 'react-native';
+import { CheckIcon, Input, Select } from "native-base";
+import { Button, Text, TextInput, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import RootStackParamList from '../../models/interfaces/RootScreensParams';
 
-import { styles } from '../../resources/styles/form.style';
+import { styles } from './styles';
 
 import useCreateTransaction from './hooks/useCreateTransaction';
 import Category from '../../models/interfaces/Category';
+import { BottomButton } from '../../components';
 
 type CreateTransactionScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>;
 
@@ -16,33 +17,46 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ navig
   const { listBalance, onCategorySelected, onChange, onButtonPress } = useCreateTransaction(navigation);
 
   return (
-    <View>
-      <TextInput style={styles.inputText} placeholder='Transaction title' onChangeText={(text: string) => onChange('name', text)} />
-      <TextInput style={styles.inputText} placeholder='Transaction value' onChangeText={(text: string) => onChange('value', text)} keyboardType='numeric'/>
+    <View style={styles.viewContainer}>
+      <Text style={styles.screenTopText}>
+        Fill the fields to add a transaction
+      </Text>
+      <Input 
+        fontSize={20} 
+        marginTop={10} 
+        marginX={5}
+        variant="underlined" 
+        placeholder="Name" 
+        onChangeText={(text: string) => onChange('name', text)}
+      />
+      <Input 
+        fontSize={20} 
+        marginTop={10}
+        marginX={5}
+        variant="underlined" 
+        placeholder="Value" 
+        keyboardType='numeric'
+        onChangeText={(text: string) => onChange('value', text)} 
+      />
       {
-        listBalance && 
-        <View style={{paddingHorizontal: 10}} >
+          listBalance && 
           <Select 
-            mt={1}
-            minWidth="200"
-            height="10"
-            borderColor='#000000'
-            accessibilityLabel="Choose category" 
-            placeholder="Choose category" 
+            fontSize={20}
+            marginTop={10}
+            marginX={5}
+            accessibilityLabel="Category" 
+            placeholder="Category" 
+            variant="underlined"
             onValueChange={itemValue => onCategorySelected(itemValue)}
-            _selectedItem={{
-              bg: "teal.600",
-              endIcon: <CheckIcon size="5" />
-            }}>
+          >
               {
                 listBalance.map((balance) => 
-                  <Select.Item label={balance.category.name} value={balance._id.toString()} />
+                  <Select.Item key={balance._id.toString()} label={balance.category.name} value={balance._id.toString()} />
                 )
               }
           </Select>
-        </View>
-      }
-      <Button title='Register' onPress={onButtonPress}/>
+        }
+        <BottomButton title='Create' onButtonPress={onButtonPress} />
     </View>
   )
 }

@@ -18,8 +18,8 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
   const fullListBalance = useQuery(Balance);
   const { appConfig } = useContext(AppConfigContext);
 
-  const [transaction, setTransaction] = useState<Partial<ITransaction>>();
   const [listBalance, setListBalance] = useState<Results<Balance>>();
+  const [transaction, setTransaction] = useState<Partial<ITransaction>>();
 
   useEffect(() => {
     setListBalance(fullListBalance.filtered('dueDate == $0', appConfig.dateToRenewBalance));
