@@ -79,7 +79,7 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
       }
     });
 
-    navigation.goBack();
+    navigation.replace('Transactions');
   }
 
   return {

@@ -8,6 +8,10 @@ export const isDateSameOrAfterToday = (date: string): boolean => {
   return moment(new Date()).isSameOrAfter(formatedDate);
 }
 
+export const getNextMonthDate = (): string => {
+  return moment(new Date()).add(1, 'month').format('DD/MM/YYYY');
+}
+
 export const getDateToRenewBalance = (dayToRenew: string, oldDate: string): string => {
   const todayDate = new Date()
   const formatedOldDate = moment(oldDate, 'DD/MM/YYYY');

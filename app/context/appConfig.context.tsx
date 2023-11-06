@@ -5,7 +5,7 @@ import Config from "../models/schemas/ConfigSchema";
 import Category from "../models/schemas/CategorySchema";
 
 import { RealmContext } from "../configs/RealmContext"
-import { getCurrentMonthYear, getDateToRenewBalance, isDateSameOrAfterToday } from "../utils/date.util";
+import { getCurrentMonthYear, getNextMonthDate } from "../utils/date.util";
 
 const { useRealm, useQuery } = RealmContext;
 
@@ -13,7 +13,8 @@ export const AppConfigContext = createContext({
   appConfig: {
     dateToRenewBalance: ''
   },
-  createNewBalances: () => {}
+  clearDatabase: () => {},
+  createNewBalances: () => {},
 });
 
 interface AppConfigContextProviderProps {
@@ -29,13 +30,11 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
 
   useEffect(() => {
     createConfigIfDoesntExist();
-    // realm.write(() => {
-    //   realm.deleteAll()
-    // });
+    // clearDatabase();
   }, [])
 
   // useEffect(() => {
-  //   appConfig && isDateSameOrAfterToday(appConfig.dateToRenewBalance) && createNewBalances();
+  //   // appConfig && isDateSameOrAfterToday(appConfig.dateToRenewBalance) && createNewBalances();
   // }, [appConfig])
 
   const createConfigIfDoesntExist = () => {
@@ -54,26 +53,33 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
     })
   }
 
+  const clearDatabase = () => {
+    realm.write(() => {
+      realm.deleteAll()
+    });
+  }
+
   const createNewBalances = () => {
     const config = realm.objectForPrimaryKey<Config>('Config', appConfig!._id!);
-    const newDueDate = getDateToRenewBalance(config!.dayToRenewBalance, config!.dateToRenewBalance);
+    const newDueDate = getNextMonthDate();
     
     realm.write(() => {
       config!.dateToRenewBalance = newDueDate;
       listCategory.forEach((category) => {
         realm.create('Balance', {
-          _id: new Realm.BSON.ObjectID(),
+          _id: new Realm.BSON.UUID(),
           category: category,
           balance: 0,
           totalExpenses: 0,
           dueDate: newDueDate
         });
       });
+      setAppConfig(config!);
     });
   }
 
   return (
-    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances }}>
+    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances, clearDatabase }}>
       {children}
     </AppConfigContext.Provider>
   )

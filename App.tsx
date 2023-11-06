@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +10,8 @@ import { DEFAULT_BUTTON_COLOR } from './app/resources/values/colors';
 import AppConfigContextProvider from './app/context/appConfig.context';
 
 const Stack = createNativeStackNavigator();
+
+LogBox.ignoreAllLogs(true);
 
 const App: React.FC = () => {
   const { RealmProvider } = RealmContext;

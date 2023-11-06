@@ -23,7 +23,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, onPress })
     const imageViewStyle = imageSelected?.id === item.id ? { ...styles.imageView, backgroundColor: DEFAULT_BUTTON_COLOR } : styles.imageView;
 
     return (
-      <TouchableOpacity onPress={() => { onImageSelected(item) }}>
+      <TouchableOpacity onPress={() => { onImageSelected(item) }} key={item.id}>
         <View key={item.id} style={imageViewStyle}>
           <Image style={styles.image} source={{ uri: item.data }} />
         </View>
