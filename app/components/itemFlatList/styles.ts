@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { DEFAULT_BLACK } from '../../resources/values/colors';
+import { DEFAULT_GRAY } from '../../resources/values/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     borderBottomWidth: 1,
-    borderBottomColor: DEFAULT_BLACK,
+    borderBottomColor: DEFAULT_GRAY,
   },
   iconView: {
     width: '12%',
     borderRadius: 30,
-    backgroundColor: DEFAULT_BLACK,
+    backgroundColor: DEFAULT_GRAY,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

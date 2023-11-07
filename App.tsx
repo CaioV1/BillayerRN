@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import routes from './app/routes';
 import { RealmContext } from './app/configs/RealmContext';
-import { DEFAULT_BUTTON_COLOR } from './app/resources/values/colors';
+import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR } from './app/resources/values/colors';
 import AppConfigContextProvider from './app/context/appConfig.context';
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +29,7 @@ const App: React.FC = () => {
                   options={{
                     title: route.title,
                     headerBackTitleVisible: false,
+                    headerTintColor: DEFAULT_BLACK,
                     headerStyle: {
                       backgroundColor: DEFAULT_BUTTON_COLOR
                    }

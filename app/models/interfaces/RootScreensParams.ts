@@ -3,6 +3,7 @@ type RootStackParamList = {
   Balance: undefined;
   CreateTransaction: undefined;
   CreateCategory: undefined;
+  BalanceHistory: undefined;
   Profile: { userId: string };
   Feed: { sort: 'latest' | 'top' } | undefined;
 };

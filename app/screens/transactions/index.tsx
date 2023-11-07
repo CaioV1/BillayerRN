@@ -11,7 +11,7 @@ import { RealmContext } from "../../configs/RealmContext";
 import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { convertToMoney } from "../../utils/string.util";
 
-const { useRealm, useQuery } = RealmContext;
+const { useQuery } = RealmContext;
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 

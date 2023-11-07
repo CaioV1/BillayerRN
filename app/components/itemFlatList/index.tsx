@@ -2,6 +2,7 @@ import React from "react"
 import { Image, Text, View } from "react-native";
 
 import styles from "./styles";
+import { DEFAULT_BLACK } from "../../resources/values/colors";
 
 interface ItemFlatListProps {
   title: string;
@@ -18,9 +19,9 @@ const ItemFlatList: React.FC<ItemFlatListProps> = ({
   value, 
   icon, 
   subtitle, 
-  titleColor = '#000000', 
-  subtitleColor = '#000000',
-  valueColor = '#000000',
+  titleColor = DEFAULT_BLACK, 
+  subtitleColor = DEFAULT_BLACK,
+  valueColor = DEFAULT_BLACK,
 }) => (
   <View style={styles.mainContainer}>
     <View style={styles.iconView}>
