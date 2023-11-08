@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: DEFAULT_GRAY,
   },
@@ -26,7 +27,6 @@ const styles = StyleSheet.create({
   },
   titleView: {
     width: '58%',
-    marginVertical: 10,
     paddingLeft: 10,
   },
   valueView: {

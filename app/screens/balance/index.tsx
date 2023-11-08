@@ -1,8 +1,8 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-import IBalance from "../../models/interfaces/Balance";
+import Balance from "../../models/schemas/BalanceSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { BalancePanel, ImageButton, ItemFlatList } from "../../components";
@@ -17,25 +17,26 @@ import useBalance from "./hooks/useBalance";
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
 const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
-  const { listBalance, totalBudget, allExpensesValue, appConfig, onRenewButtonPress } = useBalance(navigation);
+  const { listBalance, appConfig, getAllCurrentValues, onRenewButtonPress } = useBalance(navigation);
 
-  const renderCategories = (balance: IBalance) => {
+  const renderCategories = (balance: Balance) => {
     return (
-      <ItemFlatList 
-        key={balance._id.toString()}
-        title={balance.category.name} 
-        value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
-        valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === balance.category.iconId)?.data}
-        subtitle={`Budget: ${convertToMoney(balance.category.budget)} \nExpenses: ${convertToMoney(balance.totalExpenses)} `} 
-      />
+      <TouchableOpacity key={balance._id.toString()} onPress={() => navigation.navigate('DetailCategory', { balance })}>
+        <ItemFlatList           
+          title={balance.category.name} 
+          value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
+          valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
+          icon={listImgBase64.find((imgBase64) => imgBase64.id === balance.category.iconId)?.data}
+          subtitle={`Budget: ${convertToMoney(balance.category.budget)} \nExpenses: ${convertToMoney(balance.totalExpenses)} `} 
+        />
+      </TouchableOpacity>
     )
   }
   
   return (
     <View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <BalancePanel budget={totalBudget} totalExpenses={allExpensesValue} />
+        <BalancePanel {...getAllCurrentValues()} />
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
           <ImageButton buttonTitle='List Transaction' imageBase64={listMenu[0].data} onPress={() => navigation.navigate('Transactions')} />
           <ImageButton buttonTitle='Balance History' imageBase64={listMenu[3].data} onPress={() => navigation.navigate('BalanceHistory')} />

@@ -3,7 +3,7 @@ import { LIGHT_GRAY } from "../../resources/values/colors";
 
 export const styles = StyleSheet.create({
   viewContainer: {
-    flex: 1, 
+    display: 'flex',
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: LIGHT_GRAY,

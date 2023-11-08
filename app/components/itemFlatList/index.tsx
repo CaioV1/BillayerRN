@@ -6,7 +6,7 @@ import { DEFAULT_BLACK } from "../../resources/values/colors";
 
 interface ItemFlatListProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   value: string;
   icon?: string;
   titleColor?: string;
@@ -29,7 +29,7 @@ const ItemFlatList: React.FC<ItemFlatListProps> = ({
     </View>
     <View style={styles.titleView}>
       <Text style={{...styles.titleText, color: titleColor}}>{title}</Text>
-      <Text style={{...styles.subtitleText, color: subtitleColor}}>{subtitle}</Text>
+      { subtitle && <Text style={{...styles.subtitleText, color: subtitleColor}}>{subtitle}</Text>}
     </View>
     <View style={styles.valueView}>
       <Text style={{...styles.valueText, color: valueColor}}>{value}</Text>

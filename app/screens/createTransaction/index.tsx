@@ -1,15 +1,14 @@
 import React from 'react';
-import { CheckIcon, Input, Select } from "native-base";
-import { Button, Text, TextInput, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Input, Select } from "native-base";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import RootStackParamList from '../../models/interfaces/RootScreensParams';
 
 import { styles } from './styles';
 
-import useCreateTransaction from './hooks/useCreateTransaction';
-import Category from '../../models/interfaces/Category';
 import { BottomButton } from '../../components';
+import useCreateTransaction from './hooks/useCreateTransaction';
 
 type CreateTransactionScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>;
 
