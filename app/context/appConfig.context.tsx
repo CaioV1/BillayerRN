@@ -29,8 +29,8 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   const [appConfig, setAppConfig] = useState<IConfig>();
 
   useEffect(() => {
-    createConfigIfDoesntExist();
     // clearDatabase();
+    createConfigIfDoesntExist();
   }, [])
 
   // useEffect(() => {
@@ -47,7 +47,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
       const newAppConfig = realm.create<Config>('Config', {
         darkTheme: true,
         dayToRenewBalance: '20',
-        dateToRenewBalance: `20/${getCurrentMonthYear()}`
+        dateToRenewBalance: getNextMonthDate()
       });
       setAppConfig(newAppConfig);
     })

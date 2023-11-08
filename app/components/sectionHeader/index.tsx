@@ -6,7 +6,7 @@ import { DEFAULT_BLACK } from "../../resources/values/colors";
 
 interface SectionHeaderProps {
   title: string;
-  value: string;
+  value?: string;
   valueColor?: string;
 }
 
@@ -15,9 +15,13 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({ title, value, valueColor 
     <Text style={styles.text}>
       {title}
     </Text>
-    <Text style={{...styles.text, color: valueColor}}>
-      {value}
-    </Text>
+    { 
+      value && 
+      <Text style={{...styles.text, color: valueColor}}>
+        {value}
+      </Text>
+    }
+    
   </View>
 )
 

@@ -1,14 +1,23 @@
+import { Alert } from "react-native";
 import { Results } from "realm/dist/bundle";
 import { useEffect, useState } from "react";
-import { RouteProp } from "@react-navigation/native";
-
-import useBalance from "../../../hooks/useBalance";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import Balance from "../../../models/schemas/BalanceSchema";
+import Category from "../../../models/schemas/CategorySchema";
+import Transaction from "../../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
-const useDetailCategory = (route: RouteProp<RootStackParamList, "DetailCategory">) => {
+import useBalance from "../../../hooks/useBalance";
+import { RealmContext } from "../../../configs/RealmContext";
+
+const { useRealm, useQuery } = RealmContext;
+
+const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootStackParamList, 'DetailCategory'>) => {
   const { balance } = route.params;
+
+  const realm = useRealm();
+  const listTransaction = useQuery(Transaction);
   const { listBalance, getBalanceFromData } = useBalance();
 
   const [allExpensesResult, setAllExpensesResult] = useState<number>(0);
@@ -21,12 +30,40 @@ const useDetailCategory = (route: RouteProp<RootStackParamList, "DetailCategory"
   useEffect(() => {
     filteredBalanceList && setAllExpensesResult(filteredBalanceList.reduce((acc, balance) => acc + balance.totalExpenses, 0))
   }, [filteredBalanceList]);
+
+  const deleteCategory = (balance: Balance) => {
+    try {
+      const category = realm.objectForPrimaryKey<Category>('Category', balance.category._id);
+      const transactionsByBalance = listTransaction.filtered('balance.category._id == $0', balance.category._id);
+
+      realm.write(() => {
+        transactionsByBalance.forEach((transaction) => {
+          realm.delete(transaction);
+        });
+        realm.delete(balance);
+        realm.delete(category);
+      });
+      
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('An error has occurred while deleting the category data');
+      console.log(error);
+    }
+  }
+
+  const onDeleteButtonPress = () => {
+    Alert.alert('Confirm delete', 'This action will delete all balances and transactions of this category.', [
+      { text: 'Yes', onPress: () => { deleteCategory(balance) } },
+      { text: 'No', onPress: () => {} }
+    ])
+  }
   
   return {
     balance,
     allExpensesResult,
     filteredBalanceList,
-    getBalanceFromData
+    getBalanceFromData,
+    onDeleteButtonPress
   }
 }
 

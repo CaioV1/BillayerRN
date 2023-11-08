@@ -1,22 +1,27 @@
-import { useContext, useState } from "react";
 import { Alert } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useContext, useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import ICategory from '../../../models/interfaces/Category';
+import Category from "../../../models/schemas/CategorySchema";
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import { RealmContext } from "../../../configs/RealmContext";
-import { getDefaultDateFormat } from "../../../utils/date.util";
 import { AppConfigContext } from "../../../context/appConfig.context";
-import Category from "../../../models/schemas/CategorySchema";
 
 const { useRealm } = RealmContext;
 
-const useCreateCategory = (navigation: NativeStackNavigationProp<RootStackParamList, "CreateCategory">) => {
+const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStackParamList, 'CreateCategory'>) => {
+  const paramCategory = route.params?.category;
+
   const realm = useRealm();
   const { appConfig } = useContext(AppConfigContext);
 
   const [category, setCategory] = useState<Partial<ICategory>>();
+
+  useEffect(() => {
+    paramCategory && setCategory(paramCategory);
+  }, []);
 
   const onChange = (key: string, value: any) => {
     setCategory((previouValue) => ({
@@ -48,11 +53,18 @@ const useCreateCategory = (navigation: NativeStackNavigationProp<RootStackParamL
     }
 
     realm.write(() => {
-      const newCategory = realm.create<Category>('Category', { 
+      const categoryToRealm = { 
         name: category.name!,
         iconId: parseInt(category.iconId!.toString()),
         budget: parseInt(category.budget!.toString())
-      });
+      };
+
+      if(paramCategory){
+        realm.create<Category>('Category', { ...categoryToRealm, _id: paramCategory._id }, true);
+        return 
+      }
+      
+      const newCategory = realm.create<Category>('Category', categoryToRealm);
 
       realm.create('Balance', { 
         category: newCategory,
@@ -66,6 +78,7 @@ const useCreateCategory = (navigation: NativeStackNavigationProp<RootStackParamL
   }
 
   return {
+    paramCategory,
     category,
     onChange,
     onButtonPress

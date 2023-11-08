@@ -17,8 +17,12 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 20,
   },
-  screenTopText: {
+  categoryNameText: {
     fontSize: 25,
-    marginHorizontal: 20,
-  }
+    fontWeight: '700'
+  },
+  categoryBudgetText: {
+    marginTop: 5,
+    fontSize: 15,
+  },
 });

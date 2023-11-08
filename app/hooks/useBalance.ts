@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Balance from "../models/schemas/BalanceSchema";
 import Category from "../models/schemas/CategorySchema";
@@ -14,6 +14,17 @@ const useBalance = () => {
   const listBalance = useQuery(Balance);
 
   const { appConfig } = useContext(AppConfigContext);
+
+  // useEffect(() => {
+  //   console.log('listCategory');
+  //   listCategory.forEach((category) => {
+  //     console.log(category);
+  //   })
+  //   console.log('\nlistBalance');
+  //   listBalance.forEach((balance) => {
+  //     console.log(balance);
+  //   })
+  // }, [])
 
   const formatBalanceList = (): Array<BalanceHistoryItemInterface> => {
     const tempList: Array<BalanceHistoryItemInterface> = [];

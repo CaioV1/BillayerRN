@@ -14,8 +14,8 @@ import useCreateCategory from "./hooks/useCreateCategory";
 
 type CreateCategoryScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateCategory'>;
 
-const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation }) => {
-  const { onChange, onButtonPress } = useCreateCategory(navigation);
+const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navigation }) => {
+  const { paramCategory, category, onChange, onButtonPress } = useCreateCategory({ route, navigation });
   return (
     <View style={styles.viewContainer}>
       <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
@@ -26,6 +26,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation 
           fontSize={20} 
           marginTop={10} 
           marginX={5}
+          value={category?.name}
           variant="underlined" 
           placeholder="Name" 
           onChangeText={(text: string) => onChange('name', text)}
@@ -35,15 +36,16 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ navigation 
           marginTop={10}
           marginBottom={30}
           marginX={5}
+          value={category?.budget?.toString()}
           variant="underlined" 
           placeholder="Budget" 
           keyboardType='numeric'
           returnKeyType='done'
           onChangeText={(text: string) => onChange('budget', text)} 
         />
-        <ImageSelector listImageInfo={listImgBase64} onPress={(item: ImageBase64) => onChange('iconId', item.id)} />
+        <ImageSelector listImageInfo={listImgBase64} selectedImage={listImgBase64.find((item) => item.id === paramCategory?.iconId)} onPress={(item: ImageBase64) => onChange('iconId', item.id)} />
       </ScrollView>
-      <BottomButton title='Create' onButtonPress={onButtonPress} />
+      <BottomButton title={paramCategory ? 'Update' : 'Create'} onButtonPress={onButtonPress} />
     </View>
   )
 }

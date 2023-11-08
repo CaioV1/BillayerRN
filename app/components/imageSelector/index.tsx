@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
@@ -8,11 +8,16 @@ import ImageBase64 from "../../models/interfaces/ImageBase64";
 
 interface ImageSelectorProps {
   listImageInfo: Array<ImageBase64>;
+  selectedImage?: ImageBase64;
   onPress: (imageInfo: ImageBase64) => void
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, onPress }) => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, selectedImage, onPress }) => {
   const [imageSelected, setImageSelected] = useState<ImageBase64>()
+
+  useEffect(() => {
+    selectedImage && setImageSelected(selectedImage);
+  }, [])
 
   const onImageSelected = (item: ImageBase64) => {
     setImageSelected(item);
