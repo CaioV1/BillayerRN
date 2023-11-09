@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     headerTintColor: DEFAULT_BLACK,
                     headerStyle: {
                       backgroundColor: DEFAULT_BUTTON_COLOR
-                   }
+                    }
                   }}
                 />
               ))}
