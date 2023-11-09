@@ -3,11 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import ICategory from '../../../models/interfaces/Category';
-import Category from "../../../models/schemas/CategorySchema";
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import { RealmContext } from "../../../configs/RealmContext";
 import { AppConfigContext } from "../../../context/appConfig.context";
+import { createCategory, updateCategory } from "../../../services/category.service";
 
 const { useRealm } = RealmContext;
 
@@ -30,49 +30,35 @@ const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStack
     }));
   }
 
-  const onButtonPress = () => {
-    if(!category?.name){
-      Alert.alert("Please fill the category's name");
-      return;
-    }
-
-    if(!category?.iconId){
-      Alert.alert("Please select the icon");
-      return;
-    }
-
-    if(!category?.budget){
-      Alert.alert("Please fill the category's budget");
-      return;
-    }
+  const validateFields = (): string | void => {
+    if(!category?.name) return "Please fill the category's name";
+    if(!category?.iconId) return "Please select the icon";
+    if(!category?.budget) return "Please fill the category's budget";
 
     const pattern = /^-?\d+(\.\d+)?$/;
-    if(!pattern.test(category.budget.toString())){
-      Alert.alert("Please fill only numbers in the budget field");
+    if(!pattern.test(category.budget.toString())) return "Please fill only numbers in the budget field";
+  }
+
+  const onButtonPress = () => {
+    const validationResult = validateFields();
+
+    if(validationResult){
+      Alert.alert(validationResult);
       return;
     }
 
-    realm.write(() => {
-      const categoryToRealm = { 
-        name: category.name!,
-        iconId: parseInt(category.iconId!.toString()),
-        budget: parseInt(category.budget!.toString())
-      };
+    const newCategory: ICategory = {
+      _id: paramCategory?._id,
+      name: category!.name!,
+      budget: category!.budget!,
+      iconId: category!.iconId!
+    }
 
-      if(paramCategory){
-        realm.create<Category>('Category', { ...categoryToRealm, _id: paramCategory._id }, true);
-        return 
-      }
-      
-      const newCategory = realm.create<Category>('Category', categoryToRealm);
-
-      realm.create('Balance', { 
-        category: newCategory,
-        balance: 0,
-        totalExpenses: 0,
-        dueDate: appConfig.dateToRenewBalance
-      });
-    });
+    if(paramCategory){
+      updateCategory(realm, paramCategory, newCategory);
+    } else {
+      createCategory(realm, newCategory, appConfig.dateToRenewBalance);
+    }
 
     navigation.goBack();
   }
