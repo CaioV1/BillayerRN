@@ -8,8 +8,8 @@ import ITransaction from '../../../models/interfaces/Transaction';
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import { RealmContext } from "../../../configs/RealmContext";
-import { getDefaultDateFormat } from "../../../utils/date.util";
 import { AppConfigContext } from "../../../context/appConfig.context";
+import { createTransaction, updateTransaction } from "../../../services/transaction.service";
 
 const { useRealm, useQuery } = RealmContext;
 
@@ -44,58 +44,38 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
     }));
   }
 
-  const onButtonPress = () => {
-    if(!transaction?.name){
-      Alert.alert("Please fill the name field");
-      return;
-    }
-
-    if(!transaction?.value){
-      Alert.alert("Please fill the value field");
-      return;
-    }
-
-    if(!transaction?.balance){
-      Alert.alert("Please select a category");
-      return;
-    }
+  const validateFields = (): string | void => {
+    if(!transaction?.name) return "Please fill the name field"
+    if(!transaction?.value) return "Please fill the value field"
+    if(!transaction?.balance) return "Please select a category"
 
     const pattern = /^-?\d+(\.\d+)?$/;
-    if(!pattern.test(transaction.value.toString())){
-      Alert.alert("Please fill only numbers in the value field");
+    if(!pattern.test(transaction.value.toString())) return "Please fill only numbers in the value field"; 
+  }
+
+  const onButtonPress = () => {
+    const validationResult = validateFields();
+
+    if(validationResult){
+      Alert.alert(validationResult);
       return;
     }
 
-    const balance = realm.objectForPrimaryKey<Balance>('Balance', transaction.balance._id);
+    const newTransaction: ITransaction = {
+      _id: transaction!._id,
+      name: transaction!.name!,
+      value: transaction!.value!,
+      balance: transaction!.balance!,
+      createdAt: transaction!.createdAt
+    }
 
-    realm.write(() => {
-      const floatValue = parseFloat(transaction.value!.toString());
-      const transactionToReal = {
-        name: transaction.name!,
-        value: floatValue,
-        balance: transaction.balance,
-      };
-
-      if(paramTransaction){
-        if(paramTransaction.balance._id === transaction.balance?._id){
-          realm.create('Balance', { ...balance, totalExpenses: balance!.totalExpenses + (floatValue - paramTransaction.value) }, true);
-        } else {
-          realm.create('Balance', { ...paramTransaction.balance, totalExpenses: paramTransaction.balance!.totalExpenses - paramTransaction.value }, true);
-          realm.create('Balance', { ...balance, totalExpenses: balance!.totalExpenses + floatValue }, true);
-        }
-        realm.create('Transaction', { ...transaction, ...transactionToReal }, true);
-        return;
-      }
-      
-      realm.create('Transaction', { 
-        ...transactionToReal,
-        createdAt: getDefaultDateFormat(new Date())
-      });
-
-      if(balance) balance.totalExpenses = balance.totalExpenses + floatValue;
-    });
-
-    paramTransaction ? navigation.pop(2) : navigation.goBack();
+    if(paramTransaction) {
+      updateTransaction(realm, paramTransaction, newTransaction);
+      navigation.pop(2);
+    } else {
+      createTransaction(realm, newTransaction);
+      navigation.goBack()
+    }
   }
 
   return {

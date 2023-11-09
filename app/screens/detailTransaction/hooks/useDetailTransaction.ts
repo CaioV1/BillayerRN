@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import { RealmContext } from "../../../configs/RealmContext";
-import Balance from "../../../models/schemas/BalanceSchema";
+import * as transactionService from '../../../services/transaction.service';
 
 const { useRealm } = RealmContext;
 
@@ -15,11 +15,7 @@ const useDetailTransaction = ({ navigation, route }: NativeStackScreenProps<Root
 
   const deleteTransaction = () => {
     try {
-      realm.write(() => {
-        const balance = realm.objectForPrimaryKey<Balance>('Balance', transaction.balance._id);
-        balance!.totalExpenses = transaction.balance.totalExpenses - transaction.value;
-        realm.delete(transaction);
-      });
+      transactionService.deleteTransaction(realm, transaction);
       navigation.goBack();
     } catch (error) {
       Alert.alert('An error has occurred while deleting the transaction');

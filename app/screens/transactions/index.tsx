@@ -7,8 +7,8 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { BottomButton, ItemFlatList } from "../../components";
 import { RealmContext } from "../../configs/RealmContext";
-import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { convertToMoney } from "../../utils/string.util";
+import { listImgBase64 } from "../../resources/static/categoriesImages";
 
 const { useQuery } = RealmContext;
 
@@ -19,7 +19,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
 
   const renderTransactions = (transaction: Transaction) => {
     return (
-      <TouchableOpacity key={transaction._id.toString()} onPress={() => navigation.navigate('DetailTransaction', { transaction })}>
+      <TouchableOpacity key={transaction._id!.toString()} onPress={() => navigation.navigate('DetailTransaction', { transaction })}>
         <ItemFlatList 
           title={transaction.name} 
           value={convertToMoney(transaction.value)} 
