@@ -20,7 +20,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navi
     <View style={styles.viewContainer}>
       <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
         <Text style={styles.screenTopText}>
-          Fill the fields to add a category
+          Fill the fields
         </Text>
         <Input
           fontSize={20} 
@@ -41,7 +41,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navi
           placeholder="Budget" 
           keyboardType='numeric'
           returnKeyType='done'
-          onChangeText={(text: string) => onChange('budget', text)} 
+          onChangeText={(text: string) => onChange('budget', text.replace(',', '.'))} 
         />
         <ImageSelector listImageInfo={listImgBase64} selectedImage={listImgBase64.find((item) => item.id === paramCategory?.iconId)} onPress={(item: ImageBase64) => onChange('iconId', item.id)} />
       </ScrollView>

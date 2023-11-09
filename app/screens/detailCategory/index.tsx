@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import Balance from "../../models/interfaces/Balance";
@@ -39,7 +39,9 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
         <ImageButton buttonTitle='Delete' imageBase64={listMenu[6].data} onPress={() => onDeleteButtonPress()} />
       </View>
       { filteredBalanceList && <SectionHeader title='History Expenses' value={convertToMoney(allExpensesResult)}/> }
-      { filteredBalanceList && filteredBalanceList.map((balance) => renderItem(balance)) }
+      <ScrollView showsVerticalScrollIndicator={false}>
+        { filteredBalanceList && filteredBalanceList.map((balance) => renderItem(balance)) }
+      </ScrollView>
     </View>
   )
 }

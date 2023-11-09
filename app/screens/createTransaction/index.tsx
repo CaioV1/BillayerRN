@@ -18,7 +18,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
   return (
     <View style={styles.viewContainer}>
       <Text style={styles.screenTopText}>
-        Fill the fields to add a transaction
+        Fill the fields
       </Text>
       <Input 
         fontSize={20} 
@@ -38,7 +38,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
         placeholder="Value" 
         keyboardType='numeric'
         returnKeyType='done'
-        onChangeText={(text: string) => onChange('value', text)} 
+        onChangeText={(text: string) => onChange('value', text.replace(',', '.'))} 
       />
       {
           listBalance && 
