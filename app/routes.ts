@@ -5,6 +5,7 @@ import {
   CreateCategoryScreen, 
   CreateTransactionScreen, 
   DetailCategoryScreen, 
+  DetailTransactionScreen, 
   TransactionsScreen 
 } from "./screens";
 
@@ -38,6 +39,11 @@ const routes: Array<Route> = [
     name: 'DetailCategory',
     title: 'Detail Category',
     component: DetailCategoryScreen
+  },
+  {
+    name: 'DetailTransaction',
+    title: 'Detail Transaction',
+    component: DetailTransactionScreen
   },
 ];
 

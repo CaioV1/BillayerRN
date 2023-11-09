@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { Results } from "realm/dist/bundle";
 import { useContext, useEffect, useState } from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import Balance from "../../../models/schemas/BalanceSchema";
 import ITransaction from '../../../models/interfaces/Transaction';
@@ -13,7 +13,9 @@ import { AppConfigContext } from "../../../context/appConfig.context";
 
 const { useRealm, useQuery } = RealmContext;
 
-const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackParamList, "CreateTransaction", undefined>) => {
+const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>) => {
+  const paramTransaction = route.params?.transaction;
+
   const realm = useRealm();
   const fullListBalance = useQuery(Balance);
   const { appConfig } = useContext(AppConfigContext);
@@ -23,6 +25,7 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
 
   useEffect(() => {
     setListBalance(fullListBalance.filtered('dueDate == $0', appConfig.dateToRenewBalance));
+    paramTransaction && setTransaction(paramTransaction);
   }, [])
 
   const onChange = (key: string, value: any) => {
@@ -66,25 +69,39 @@ const useCreateTransaction = (navigation: NativeStackNavigationProp<RootStackPar
     const balance = realm.objectForPrimaryKey<Balance>('Balance', transaction.balance._id);
 
     realm.write(() => {
-      const floatValue = parseFloat(transaction.value!.toString())
-      realm.create('Transaction', { 
+      const floatValue = parseFloat(transaction.value!.toString());
+      const transactionToReal = {
         name: transaction.name!,
         value: floatValue,
         balance: transaction.balance,
+      };
+
+      if(paramTransaction){
+        if(paramTransaction.balance._id === transaction.balance?._id){
+          realm.create('Balance', { ...balance, totalExpenses: balance!.totalExpenses + (floatValue - paramTransaction.value) }, true);
+        } else {
+          realm.create('Balance', { ...paramTransaction.balance, totalExpenses: paramTransaction.balance!.totalExpenses - paramTransaction.value }, true);
+          realm.create('Balance', { ...balance, totalExpenses: balance!.totalExpenses + floatValue }, true);
+        }
+        realm.create('Transaction', { ...transaction, ...transactionToReal }, true);
+        return;
+      }
+      
+      realm.create('Transaction', { 
+        ...transactionToReal,
         createdAt: getDefaultDateFormat(new Date())
       });
 
-      if(balance){
-        balance.totalExpenses = balance.totalExpenses + floatValue;
-      }
+      if(balance) balance.totalExpenses = balance.totalExpenses + floatValue;
     });
 
-    navigation.goBack();
+    paramTransaction ? navigation.pop(2) : navigation.goBack();
   }
 
   return {
     transaction,
     listBalance,
+    paramTransaction,
     onCategorySelected,
     onChange,
     onButtonPress  
