@@ -7,7 +7,7 @@ import Transaction from "../models/schemas/TransactionSchema";
 import { getDefaultDateFormat } from "../utils/date.util";
 
 export const createTransaction = (realm: Realm, transaction: ITransaction) => {
-  const floatValue = parseFloat(transaction.value!.toString());
+  const floatValue = parseFloat(transaction.value!.toString().replace(',', '.'));
   const balance = realm.objectForPrimaryKey<Balance>('Balance', transaction.balance._id);
 
   if(!balance){
@@ -28,7 +28,7 @@ export const createTransaction = (realm: Realm, transaction: ITransaction) => {
 }
 
 export const updateTransaction = (realm: Realm, oldTransaction: Transaction, newTransaction: ITransaction) => {
-  const floatValue = parseFloat(newTransaction.value!.toString());
+  const floatValue = parseFloat(newTransaction.value!.toString().replace(',', '.'));
   const balance = realm.objectForPrimaryKey<Balance>('Balance', newTransaction.balance._id);
 
   if(!balance){

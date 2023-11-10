@@ -26,7 +26,7 @@ export default class Transaction extends Realm.Object<Transaction> implements IT
     properties: {
       _id: { type: 'uuid', default: () => new Realm.BSON.UUID() },
       name: 'string',
-      value: 'float',
+      value: 'double',
       balance: 'Balance?',
       createdAt: 'string'
     },

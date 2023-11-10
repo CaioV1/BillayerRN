@@ -38,7 +38,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
         placeholder="Value" 
         keyboardType='numeric'
         returnKeyType='done'
-        onChangeText={(text: string) => onChange('value', text.replace(',', '.'))} 
+        onChangeText={(text: string) => onChange('value', text)} 
       />
       {
           listBalance && 

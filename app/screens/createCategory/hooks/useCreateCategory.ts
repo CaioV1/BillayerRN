@@ -35,7 +35,7 @@ const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStack
     if(!category?.iconId) return "Please select the icon";
     if(!category?.budget) return "Please fill the category's budget";
 
-    const pattern = /^-?\d+(\.\d+)?$/;
+    const pattern = /^-?\d+((\.|\,)\d+)?$/;
     if(!pattern.test(category.budget.toString())) return "Please fill only numbers in the budget field";
   }
 

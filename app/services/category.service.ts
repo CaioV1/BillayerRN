@@ -10,7 +10,7 @@ export const createCategory = (realm: Realm, category: ICategory, dateToRenewBal
   const convertedCategory = {
     name: category.name!,
     iconId: parseInt(category.iconId!.toString()),
-    budget: parseFloat(category.budget!.toString())
+    budget: parseFloat(category.budget!.toString().replace(',', '.'))
   };
 
   return realm.write(() => {
@@ -31,7 +31,7 @@ export const updateCategory = (realm: Realm, oldCategory: Category, newCategory:
     realm.create<Category>('Category', { 
       name: newCategory.name!,
       iconId: parseInt(newCategory.iconId!.toString()),
-      budget: parseFloat(newCategory.budget!.toString()),
+      budget: parseFloat(newCategory.budget!.toString().replace(',', '.')),
       _id: oldCategory._id 
     }, true)
   );

@@ -49,7 +49,7 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
     if(!transaction?.value) return "Please fill the value field"
     if(!transaction?.balance) return "Please select a category"
 
-    const pattern = /^-?\d+(\.\d+)?$/;
+    const pattern = /^-?\d+((\.|\,)\d+)?$/;
     if(!pattern.test(transaction.value.toString())) return "Please fill only numbers in the value field"; 
   }
 

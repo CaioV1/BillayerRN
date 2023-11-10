@@ -41,7 +41,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navi
           placeholder="Budget" 
           keyboardType='numeric'
           returnKeyType='done'
-          onChangeText={(text: string) => onChange('budget', text.replace(',', '.'))} 
+          onChangeText={(text: string) => onChange('budget', text)} 
         />
         <ImageSelector listImageInfo={listImgBase64} selectedImage={listImgBase64.find((item) => item.id === paramCategory?.iconId)} onPress={(item: ImageBase64) => onChange('iconId', item.id)} />
       </ScrollView>
