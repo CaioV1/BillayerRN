@@ -39,17 +39,27 @@ export const updateCategory = (realm: Realm, oldCategory: Category, newCategory:
   return updatedCategory;
 }
 
-export const deleteCategory = (realm: Realm, balance: Balance, listTransaction: Results<Transaction>) => {
+export const deleteCategory = (
+  realm: Realm, 
+  balance: Balance, 
+  listTransaction: Results<Transaction>, 
+  listBalance: Results<Balance>
+) => {
   const category = realm.objectForPrimaryKey<Category>('Category', balance.category._id);
   if(!category) throw new Error('Category not found inside of the balance')
 
-  const transactionsByBalance = listTransaction.filtered('balance.category._id == $0', balance.category._id);
+  const balancesByCategoryId = listBalance.filtered('category._id == $0', balance.category._id);
+  const transactionsByCategoryId = listTransaction.filtered('balance.category._id == $0', balance.category._id);
 
   realm.write(() => {
-    transactionsByBalance.forEach((transaction) => {
+    transactionsByCategoryId.forEach((transaction) => {
       realm.delete(transaction);
     });
-    realm.delete(balance);
+
+    balancesByCategoryId.forEach((balance) => {
+      realm.delete(balance);
+    });
+    
     realm.delete(category);
   });
 }

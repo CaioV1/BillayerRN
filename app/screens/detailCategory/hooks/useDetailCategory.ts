@@ -33,7 +33,7 @@ const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootSta
 
   const deleteCategory = (balance: Balance) => {
     try {
-      categoryService.deleteCategory(realm, balance, listTransaction);
+      categoryService.deleteCategory(realm, balance, listTransaction, listBalance);
       navigation.goBack();
     } catch (error) {
       Alert.alert('An error has occurred while deleting the category data');
