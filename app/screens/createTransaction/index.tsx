@@ -18,7 +18,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
   return (
     <View style={styles.viewContainer}>
       <Text style={styles.screenTopText}>
-        Fill the fields
+        Fill the fields to { paramTransaction ? 'update' : 'create' } the transaction
       </Text>
       <Input 
         fontSize={20} 

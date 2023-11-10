@@ -22,12 +22,12 @@ const routes: Array<Route> = [
   },
   {
     name: 'CreateTransaction',
-    title: 'Create Transaction',
+    title: 'Transaction',
     component: CreateTransactionScreen
   },
   {
     name: 'CreateCategory',
-    title: 'Create Category',
+    title: 'Category',
     component: CreateCategoryScreen
   },
   {

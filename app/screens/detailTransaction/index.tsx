@@ -17,7 +17,7 @@ import useDetailTransaction from "./hooks/useDetailTransaction";
 type DetailTransactionProps = NativeStackScreenProps<RootStackParamList, 'DetailTransaction'>;
 
 const DetailTransaction: React.FC<DetailTransactionProps> = ({ route, navigation }) => {
-  const { transaction, onDeleteButtonPress } = useDetailTransaction({ route, navigation });
+  const { appConfig, transaction, onDeleteButtonPress } = useDetailTransaction({ route, navigation });
 
   return (
     <View style={styles.viewContainer}>
@@ -33,7 +33,10 @@ const DetailTransaction: React.FC<DetailTransactionProps> = ({ route, navigation
         <Text style={styles.transactionValueText}>{transaction.createdAt}</Text>
       </View>
       <View style={styles.viewImageButtons}>
-        <ImageButton buttonTitle='Edit' imageBase64={listMenu[5].data} onPress={() => navigation.navigate('CreateTransaction', { transaction })} />
+        {
+          appConfig.dateToRenewBalance === transaction.balance.dueDate &&
+          <ImageButton buttonTitle='Edit' imageBase64={listMenu[5].data} onPress={() => navigation.navigate('CreateTransaction', { transaction })} />
+        }
         <ImageButton buttonTitle='Delete' imageBase64={listMenu[6].data} onPress={() => onDeleteButtonPress()} />
       </View>
     </View>

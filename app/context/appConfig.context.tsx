@@ -5,7 +5,7 @@ import Config from "../models/schemas/ConfigSchema";
 import Category from "../models/schemas/CategorySchema";
 
 import { RealmContext } from "../configs/RealmContext"
-import { getCurrentMonthYear, getNextMonthDate } from "../utils/date.util";
+import { getNextMonthDate } from "../utils/date.util";
 
 const { useRealm, useQuery } = RealmContext;
 

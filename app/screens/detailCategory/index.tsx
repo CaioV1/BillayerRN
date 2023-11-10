@@ -40,7 +40,7 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
       </View>
       { filteredBalanceList && <SectionHeader title='History Expenses' value={convertToMoney(allExpensesResult)}/> }
       <ScrollView showsVerticalScrollIndicator={false}>
-        { filteredBalanceList && filteredBalanceList.map((balance) => renderItem(balance)) }
+        { filteredBalanceList && filteredBalanceList.sorted('_id', true).map((balance) => renderItem(balance)) }
       </ScrollView>
     </View>
   )

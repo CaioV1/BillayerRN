@@ -12,4 +12,5 @@
 
 - Fix bug of deleting category. Now deletes all the category's balances instead of just the current.
 - Fix bug about the float value and comma char at the input number.
+- Fix the lists ordenation and hide edit button of past transactions.
 

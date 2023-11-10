@@ -20,7 +20,7 @@ const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navi
     <View style={styles.viewContainer}>
       <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
         <Text style={styles.screenTopText}>
-          Fill the fields
+          Fill the fields to { paramCategory ? 'update' : 'create' } the category
         </Text>
         <Input
           fontSize={20} 
