@@ -34,7 +34,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
     <View style={{ flex: 1 }}>
       <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
         {
-          response && response.sorted('_id', true).map((item) => renderTransactions(item))
+          response && Array.from(response).reverse().map((item) => renderTransactions(item))
         }  
       </ScrollView>
       <BottomButton title="Add Transaction" onButtonPress={() => {
