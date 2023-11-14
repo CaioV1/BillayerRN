@@ -23,12 +23,12 @@ const BalanceHistory: React.FC<BalanceHistoryProps> = ({ navigation }) => {
 
   const renderItem = (item: Balance) => (
     <ItemFlatList 
-      key={item._id.toString()}
+      key={item._id!.toString()}
       title={item.category.name} 
-      value={convertToMoney(item.category.budget - item.totalExpenses)} 
-      valueColor={(item.category.budget - item.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
+      value={convertToMoney(item.budget - item.totalExpenses)} 
+      valueColor={(item.budget - item.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
       icon={listImgBase64.find((imgBase64) => imgBase64.id === item.category.iconId)?.data}
-      subtitle={`Budget: ${convertToMoney(item.category.budget)} \nExpenses: ${convertToMoney(item.totalExpenses)} `} 
+      subtitle={`Budget: ${convertToMoney(item.budget)} \nExpenses: ${convertToMoney(item.totalExpenses)} `} 
     />
   )
 
@@ -38,7 +38,7 @@ const BalanceHistory: React.FC<BalanceHistoryProps> = ({ navigation }) => {
         listFormattedBalance.length > 0 && 
         <SectionList
           sections={listFormattedBalance}
-          keyExtractor={(item) => item._id.toString()}
+          keyExtractor={(item) => item._id!.toString()}
           renderSectionHeader={({section }) => renderSectionHeader(section.title, getBalanceFromData(section.data))}
           renderItem={({item}) => renderItem(item)}
         />

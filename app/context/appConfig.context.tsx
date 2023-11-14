@@ -69,7 +69,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
         realm.create('Balance', {
           _id: new Realm.BSON.UUID(),
           category: category,
-          balance: 0,
+          budget: category.budget,
           totalExpenses: 0,
           dueDate: newDueDate
         });

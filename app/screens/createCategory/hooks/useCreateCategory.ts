@@ -2,6 +2,7 @@ import { Alert } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import Balance from "../../../models/schemas/BalanceSchema";
 import ICategory from '../../../models/interfaces/Category';
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
@@ -9,12 +10,13 @@ import { RealmContext } from "../../../configs/RealmContext";
 import { AppConfigContext } from "../../../context/appConfig.context";
 import { createCategory, updateCategory } from "../../../services/category.service";
 
-const { useRealm } = RealmContext;
+const { useRealm, useQuery } = RealmContext;
 
 const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStackParamList, 'CreateCategory'>) => {
   const paramCategory = route.params?.category;
 
   const realm = useRealm();
+  const balances = useQuery(Balance)
   const { appConfig } = useContext(AppConfigContext);
 
   const [category, setCategory] = useState<Partial<ICategory>>();
@@ -55,7 +57,8 @@ const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStack
     }
 
     if(paramCategory){
-      updateCategory(realm, paramCategory, newCategory);
+      const balanceFiltered = balances.filtered('category._id == $0 && dueDate == $1', paramCategory._id, appConfig.dateToRenewBalance);
+      updateCategory(realm, paramCategory, newCategory, balanceFiltered[0]);
     } else {
       createCategory(realm, newCategory, appConfig.dateToRenewBalance);
     }

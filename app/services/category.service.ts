@@ -17,7 +17,7 @@ export const createCategory = (realm: Realm, category: ICategory, dateToRenewBal
     const newCategory = realm.create<Category>('Category', convertedCategory)
     realm.create('Balance', { 
       category: newCategory,
-      balance: 0,
+      budget: convertedCategory.budget,
       totalExpenses: 0,
       dueDate: dateToRenewBalance
     });
@@ -26,15 +26,18 @@ export const createCategory = (realm: Realm, category: ICategory, dateToRenewBal
   });
 }
 
-export const updateCategory = (realm: Realm, oldCategory: Category, newCategory: ICategory) => {
-  const updatedCategory = realm.write(() =>
-    realm.create<Category>('Category', { 
+export const updateCategory = (realm: Realm, oldCategory: Category, newCategory: ICategory, currentBalance: Balance) => {
+  const newBudget = parseFloat(newCategory.budget!.toString().replace(',', '.'));
+
+  const updatedCategory = realm.write(() => {
+    realm.create<Balance>('Balance', { ...currentBalance, budget: newBudget }, true);
+    return realm.create<Category>('Category', { 
       name: newCategory.name!,
       iconId: parseInt(newCategory.iconId!.toString()),
-      budget: parseFloat(newCategory.budget!.toString().replace(',', '.')),
+      budget: newBudget,
       _id: oldCategory._id 
-    }, true)
-  );
+    }, true);
+  });
 
   return updatedCategory;
 }

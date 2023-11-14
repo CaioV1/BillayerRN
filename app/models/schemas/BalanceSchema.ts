@@ -3,21 +3,19 @@ import Realm, { ObjectSchema } from 'realm';
 import IBalance from '../interfaces/Balance';
 import Category from './CategorySchema';
 
-export default class Balance extends Realm.Object<Balance> implements IBalance {
+export default class Balance extends Realm.Object<IBalance> implements IBalance {
   constructor(
     realm: Realm, 
-    public _id: Realm.BSON.UUID,
     public category: Category, 
-    public balance: number, 
+    public budget: number, 
     public totalExpenses: number, 
-    public dueDate: string
+    public dueDate: string,
+    public _id?: Realm.BSON.UUID,
   ){
-    const newId = new Realm.BSON.ObjectID();
-    super(realm, { _id, category, balance, totalExpenses });
+    super(realm, { _id, category, budget, totalExpenses });
 
-    this._id = _id;
     this.category = category;
-    this.balance = balance;
+    this.budget = budget;
     this.totalExpenses = totalExpenses;
     this.dueDate = dueDate;
   }
@@ -27,8 +25,8 @@ export default class Balance extends Realm.Object<Balance> implements IBalance {
     properties: {
       _id: { type: 'uuid', default: () => new Realm.BSON.UUID() },
       category: 'Category?',
-      balance: 'float',
-      totalExpenses: 'float',
+      budget: 'double',
+      totalExpenses: 'double',
       dueDate: 'string'
     },
     primaryKey: '_id'
