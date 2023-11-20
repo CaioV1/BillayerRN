@@ -22,7 +22,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
 
   const renderCategories = (balance: Balance) => {
     return (
-      <TouchableOpacity key={balance._id.toString()} onPress={() => navigation.navigate('DetailCategory', { balance })}>
+      <TouchableOpacity key={balance._id!.toString()} onPress={() => navigation.navigate('DetailCategory', { balance })}>
         <ItemFlatList           
           title={balance.category.name} 
           value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
@@ -41,8 +41,8 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={styles.flatListMenu}>
           <ImageButton buttonTitle='List Transaction' imageBase64={listMenu[0].data} onPress={() => navigation.navigate('Transactions')} />
           <ImageButton buttonTitle='Balance History' imageBase64={listMenu[3].data} onPress={() => navigation.navigate('BalanceHistory')} />
-          <ImageButton buttonTitle='Add Transaction' imageBase64={listMenu[2].data} onPress={() => navigation.navigate('CreateTransaction')} />
-          <ImageButton buttonTitle='Add Category' imageBase64={listMenu[1].data} onPress={() => navigation.navigate('CreateCategory')} />
+          <ImageButton buttonTitle='Add Transaction' imageBase64={listMenu[2].data} onPress={() => navigation.navigate('CreateTransaction', {})} />
+          <ImageButton buttonTitle='Add Category' imageBase64={listMenu[1].data} onPress={() => navigation.navigate('CreateCategory', {})} />
           <ImageButton buttonTitle='Renew Balance' imageBase64={listMenu[4].data} onPress={() => onRenewButtonPress()} />
         </ScrollView>
         <SectionHeader title='Balance category'/>

@@ -37,7 +37,7 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
 
   const renderItem = (item: Balance) => (
     <ItemFlatList 
-      key={item._id.toString()}
+      key={item._id!.toString()}
       title={item.dueDate} 
       value={convertToMoney(item.totalExpenses)} 
       icon={listImgBase64.find((imgBase64) => imgBase64.id === item.category.iconId)?.data}
@@ -64,17 +64,19 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
             </ScrollView>
           </>
         ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <>
             {
               formatedTransactionList && formatedTransactionList.length > 0 && 
               <SectionList
+                contentContainerStyle={{paddingBottom: 300}}
+                showsVerticalScrollIndicator={false}
                 sections={formatedTransactionList}
                 keyExtractor={(item) => item._id.toString()}
                 renderSectionHeader={({section }) => renderSectionHeader(section.title, getBalanceFromTransactions(section.data))}
                 renderItem={({item}) => renderItemTransaction(item)}
               />
             }
-          </ScrollView>   
+          </>
         )
       }
     </View>

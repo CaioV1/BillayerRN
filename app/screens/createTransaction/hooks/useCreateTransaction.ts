@@ -36,7 +36,7 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
   }
 
   const onCategorySelected = (_id: string) => {
-    const balance = listBalance!.find((balance) => balance._id.toString() === _id);
+    const balance = listBalance!.find((balance) => balance._id!.toString() === _id);
 
     if(balance) setTransaction((previouValue) => ({
       ...previouValue,

@@ -23,3 +23,10 @@
 ### Changed
 
 - Budget will also be saved in balance entity to preserve past budget. Now when the category budget is updated only the current balance budget will be updated.
+
+## [1.2.1] - 2023-11-20
+
+### Changed
+
+- Fix layout bug from list in detail category screen.
+- Fix list ordenation in detail category screen.

@@ -30,7 +30,7 @@ const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootSta
 
   useEffect(() => {
     setFilteredBalanceList(listBalance.filtered('category._id == $0', balance.category._id));
-    setFormatedTransactionList(formatTransactionList().reverse());
+    setFormatedTransactionList(formatTransactionList());
   }, []);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootSta
 
   const formatTransactionList = (): Array<{title: string, data: Array<Transaction>}> => {
     const tempList: Array<{title: string, data: Array<Transaction>}> = [];
-    return listTransaction.filtered('balance.category._id == $0', balance.category._id).reduce((acc, transaction) => {
+    return Array.from(listTransaction.filtered('balance.category._id == $0', balance.category._id)).reverse().reduce((acc, transaction) => {
       const balanceFound = acc.find((item) => item.title === transaction.balance.dueDate);
       if(balanceFound) {
         acc.map((item) => {
