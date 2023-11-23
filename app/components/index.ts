@@ -5,3 +5,4 @@ export { default as BalancePanel } from './balancePanel';
 export { default as BottomButton } from './bottomButton';
 export { default as SectionHeader } from './sectionHeader';
 export { default as Tabs } from './tabs';
+export { default as MainMenu } from './mainMenu';

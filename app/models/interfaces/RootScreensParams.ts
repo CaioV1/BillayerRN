@@ -10,8 +10,6 @@ type RootStackParamList = {
   BalanceHistory: undefined;
   DetailCategory: { balance: Balance};
   DetailTransaction: { transaction: Transaction };
-  Profile: { userId: string };
-  Feed: { sort: 'latest' | 'top' } | undefined;
 };
 
 export default RootStackParamList;
