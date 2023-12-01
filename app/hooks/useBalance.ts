@@ -15,17 +15,6 @@ const useBalance = () => {
 
   const { appConfig } = useContext(AppConfigContext);
 
-  // useEffect(() => {
-  //   console.log('listCategory');
-  //   listCategory.forEach((category) => {
-  //     console.log(category);
-  //   })
-  //   console.log('\nlistBalance');
-  //   listBalance.forEach((balance) => {
-  //     console.log(balance);
-  //   })
-  // }, [])
-
   const formatBalanceList = (): Array<BalanceHistoryItemInterface> => {
     const tempList: Array<BalanceHistoryItemInterface> = [];
     return listBalance.reduce((acc, balance) => {
