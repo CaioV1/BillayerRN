@@ -6,13 +6,21 @@
 
 ## About The Project
 
-![](public/project_example.gif)
-
 Project to help managing your personal finances. You can insert your budgets and expenses so you can manage them with a simple but efficient interface that provides options to delete and update all the data in the app. 
 
 With the renew balance feature you can reset all your expenses generating a new balance. You can also see all your balances and expenses of a past period in the screen **Balance History** or in a more detail view in the screen **Detail Category**.
 
 The app doesn't use any external API and stores all the data in the app itself using <a href="https://www.mongodb.com/docs/realm/">Realm</a>.
+
+Here's some examples of the project running in both IOS and Android platforms:
+
+### IOS Example
+
+<img src="public/project_example.gif" alt="Logo" width="250" height="530">
+
+### Android Example
+
+<img src="public/project_example_2.gif" alt="Logo" width="290" height="530">
 
 # Getting Started
 
