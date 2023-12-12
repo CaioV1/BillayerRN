@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2023-12-12
+
+### Added
+
+- Export data feature through React Native default share method.
+
 ## [1.1.1] - 2023-11-20
 
 ### Changed
