@@ -61,3 +61,26 @@ export const deleteTransaction = (realm: Realm, transaction: Transaction) => {
     realm.delete(transaction);
   });
 }
+
+export const importData = (realm: Realm, listTransaction: Array<Transaction>) => {
+  realm.write(() => {
+    listTransaction.forEach((transaction) => {
+      const newCategory = { 
+        ...transaction.balance.category, 
+        _id: new Realm.BSON.UUID(transaction.balance.category._id) 
+      };
+
+      const newBalance = {
+        ...transaction.balance, 
+        _id: new Realm.BSON.UUID(transaction.balance._id), 
+        category: newCategory
+      };
+
+      realm.create('Transaction', { 
+        ...transaction, 
+        _id: new Realm.BSON.UUID(transaction._id),
+        balance: newBalance
+      })
+    });
+  });
+}

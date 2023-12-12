@@ -5,6 +5,7 @@
 ### Added
 
 - Export data feature through React Native default share method.
+- Import data feature through react-native-document-picker and react-native-fs libs.
 
 ## [1.1.1] - 2023-11-20
 
@@ -30,7 +31,6 @@
 - Fix bug of deleting category. Now deletes all the category's balances instead of just the current.
 - Fix bug about the float value and comma char at the input number.
 - Fix the lists ordenation and hide edit button of past transactions.
-
 
 ## [1.0.0] - 2023-11-10
 

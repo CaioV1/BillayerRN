@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import Balance from "../../models/schemas/BalanceSchema";
@@ -9,14 +9,15 @@ import { convertToMoney } from "../../utils/string.util";
 import { BalancePanel, ItemFlatList, MainMenu, SectionHeader } from "../../components";
 
 import { listImgBase64 } from "../../resources/static/categoriesImages";
-import { DEFAULT_BLACK, DEFAULT_RED } from "../../resources/values/colors";
+import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR, DEFAULT_RED } from "../../resources/values/colors";
 
 import useBalance from "./hooks/useBalance";
+import { styles } from "./styles";
 
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
 const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
-  const { listBalance, appConfig, getAllCurrentValues } = useBalance(navigation);
+  const { listBalance, appConfig, loading, setLoading, getAllCurrentValues } = useBalance(navigation);
 
   const renderCategories = (balance: Balance) => {
     return (
@@ -34,14 +35,20 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
   
   return (
     <View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <BalancePanel {...getAllCurrentValues()} />
-        <MainMenu navigation={navigation} />
-        <SectionHeader title='Balance category'/>
-        {
-          appConfig?.dateToRenewBalance && listBalance?.filtered('dueDate == $0', appConfig.dateToRenewBalance).map((item) => renderCategories(item))
-        }
-      </ScrollView>
+      {
+        loading ? (
+          <ActivityIndicator style={styles.loadingView} size="small" color={DEFAULT_BUTTON_COLOR} />
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <BalancePanel {...getAllCurrentValues()} />
+            <MainMenu navigation={navigation} setLoading={setLoading} />
+            <SectionHeader title='Balance category'/>
+            {
+              appConfig?.dateToRenewBalance && listBalance?.filtered('dueDate == $0', appConfig.dateToRenewBalance).map((item) => renderCategories(item))
+            }
+          </ScrollView>
+        )
+      }
      </View> 
   )
 }

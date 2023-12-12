@@ -15,6 +15,7 @@ export const AppConfigContext = createContext({
   },
   clearDatabase: () => {},
   createNewBalances: () => {},
+  createConfigIfDoesntExist: () => {}
 });
 
 interface AppConfigContextProviderProps {
@@ -79,7 +80,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   }
 
   return (
-    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances, clearDatabase }}>
+    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances, clearDatabase, createConfigIfDoesntExist }}>
       {children}
     </AppConfigContext.Provider>
   )
