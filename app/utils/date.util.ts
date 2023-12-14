@@ -5,7 +5,7 @@ export const getCurrentMonthYear = (): string => moment(new Date()).format('MM/Y
 
 export const isDateSameOrAfterToday = (date: string): boolean => {
   const formatedDate = moment(date, 'DD/MM/YYYY');
-  return moment(new Date()).isSameOrAfter(formatedDate);
+  return formatedDate.isSameOrAfter(moment(new Date()));
 }
 
 export const getNextMonthDate = (): string => {

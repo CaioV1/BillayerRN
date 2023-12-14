@@ -5,19 +5,29 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import Balance from "../../models/schemas/BalanceSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { convertToMoney } from "../../utils/string.util";
-import { BalancePanel, ItemFlatList, MainMenu, SectionHeader } from "../../components";
+import MainMenu from "./components/mainMenu";
+import { BalancePanel, ItemFlatList, SectionHeader } from "../../components";
 
 import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR, DEFAULT_RED } from "../../resources/values/colors";
 
-import useBalance from "./hooks/useBalance";
 import { styles } from "./styles";
+import useBalance from "./hooks/useBalance";
+import { convertToMoney } from "../../utils/string.util";
 
 type BalanceScreenProps = NativeStackScreenProps<RootStackParamList, 'Balance'>;
 
 const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
-  const { listBalance, appConfig, loading, setLoading, getAllCurrentValues } = useBalance(navigation);
+  const { 
+    listBalance, 
+    loading, 
+    appConfig,
+    importBalances, 
+    getAllCurrentValues, 
+    handleRenewButtonPress, 
+    handleExportButtonPress,
+    handleImportButtonPress 
+  } = useBalance(navigation);
 
   const renderCategories = (balance: Balance) => {
     return (
@@ -41,7 +51,13 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
             <BalancePanel {...getAllCurrentValues()} />
-            <MainMenu navigation={navigation} setLoading={setLoading} />
+            <MainMenu 
+              navigation={navigation} 
+              importBalances={importBalances}
+              onRenewButtonPress={handleRenewButtonPress}
+              onExportButtonPress={handleExportButtonPress}
+              onImportButtonPress={handleImportButtonPress}
+            />
             <SectionHeader title='Balance category'/>
             {
               appConfig?.dateToRenewBalance && listBalance?.filtered('dueDate == $0', appConfig.dateToRenewBalance).map((item) => renderCategories(item))

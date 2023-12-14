@@ -1,10 +1,13 @@
 import Realm from "realm";
 
+import IConfig from "../models/interfaces/Config";
+import Config from "../models/schemas/ConfigSchema";
+import Category from "../models/schemas/CategorySchema";
 import Balance from "../models/schemas/BalanceSchema";
 import ITransaction from "../models/interfaces/Transaction";
 import Transaction from "../models/schemas/TransactionSchema";
 
-import { getDefaultDateFormat } from "../utils/date.util";
+import { getDefaultDateFormat, getNextMonthDate, isDateSameOrAfterToday } from "../utils/date.util";
 
 export const createTransaction = (realm: Realm, transaction: ITransaction) => {
   const floatValue = parseFloat(transaction.value!.toString().replace(',', '.'));
@@ -62,7 +65,7 @@ export const deleteTransaction = (realm: Realm, transaction: Transaction) => {
   });
 }
 
-export const importData = (realm: Realm, listTransaction: Array<Transaction>) => {
+export const importData = (realm: Realm, listTransaction: Array<Transaction>, setAppConfig: (config: IConfig) => void) => {
   realm.write(() => {
     listTransaction.forEach((transaction) => {
       const newCategory = { 
@@ -82,5 +85,28 @@ export const importData = (realm: Realm, listTransaction: Array<Transaction>) =>
         balance: newBalance
       })
     });
+
+    const lastDueDate = listTransaction[listTransaction.length - 1].balance.dueDate;
+
+    const newAppConfig = realm.create<Config>('Config', {
+      darkTheme: true,
+      dayToRenewBalance: '20',
+      dateToRenewBalance: isDateSameOrAfterToday(lastDueDate) ? lastDueDate : getNextMonthDate()
+    });
+
+    setAppConfig(newAppConfig);
+
+    if(!isDateSameOrAfterToday(lastDueDate)){
+      const listCategory = realm.objects<Category>('Category');
+      listCategory.forEach((category) => {
+        realm.create('Balance', {
+          category,
+          _id: new Realm.BSON.UUID(),
+          budget: category.budget,
+          totalExpenses: 0,
+          dueDate: newAppConfig.dateToRenewBalance,
+        });
+      });
+    }
   });
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2023-12-14
+
+### Changed
+
+- Fix date config in import data feature.
+
 ## [1.2.0] - 2023-12-12
 
 ### Added

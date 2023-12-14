@@ -15,7 +15,8 @@ export const AppConfigContext = createContext({
   },
   clearDatabase: () => {},
   createNewBalances: () => {},
-  createConfigIfDoesntExist: () => {}
+  createConfigIfDoesntExist: () => {},
+  setAppConfig: (_config: IConfig) => {},
 });
 
 interface AppConfigContextProviderProps {
@@ -30,13 +31,8 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   const [appConfig, setAppConfig] = useState<IConfig>();
 
   useEffect(() => {
-    // clearDatabase();
     createConfigIfDoesntExist();
   }, [])
-
-  // useEffect(() => {
-  //   // appConfig && isDateSameOrAfterToday(appConfig.dateToRenewBalance) && createNewBalances();
-  // }, [appConfig])
 
   const createConfigIfDoesntExist = () => {
     if(response.length > 0){
@@ -51,7 +47,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
         dateToRenewBalance: getNextMonthDate()
       });
       setAppConfig(newAppConfig);
-    })
+    });
   }
 
   const clearDatabase = () => {
@@ -80,7 +76,7 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   }
 
   return (
-    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances, clearDatabase, createConfigIfDoesntExist }}>
+    <AppConfigContext.Provider value={{ appConfig: appConfig!, createNewBalances, clearDatabase, createConfigIfDoesntExist, setAppConfig }}>
       {children}
     </AppConfigContext.Provider>
   )
