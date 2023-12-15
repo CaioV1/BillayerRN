@@ -4,7 +4,8 @@
 
 ### Changed
 
-- Fix date config in import data feature.
+- Fix date config in import feature.
+- Fix data insertion in import feature.
 
 ## [1.2.0] - 2023-12-12
 

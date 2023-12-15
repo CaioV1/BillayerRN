@@ -64,11 +64,11 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
       config!.dateToRenewBalance = newDueDate;
       listCategory.forEach((category) => {
         realm.create('Balance', {
-          _id: new Realm.BSON.UUID(),
-          category: category,
-          budget: category.budget,
+          category,
           totalExpenses: 0,
-          dueDate: newDueDate
+          dueDate: newDueDate,
+          budget: category.budget,
+          _id: new Realm.BSON.UUID(),
         });
       });
       setAppConfig(config!);

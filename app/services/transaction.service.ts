@@ -1,10 +1,13 @@
 import Realm from "realm";
 
 import IConfig from "../models/interfaces/Config";
-import Config from "../models/schemas/ConfigSchema";
-import Category from "../models/schemas/CategorySchema";
-import Balance from "../models/schemas/BalanceSchema";
+import IBalance from "../models/interfaces/Balance";
+import ICategory from "../models/interfaces/Category";
 import ITransaction from "../models/interfaces/Transaction";
+
+import Config from "../models/schemas/ConfigSchema";
+import Balance from "../models/schemas/BalanceSchema";
+import Category from "../models/schemas/CategorySchema";
 import Transaction from "../models/schemas/TransactionSchema";
 
 import { getDefaultDateFormat, getNextMonthDate, isDateSameOrAfterToday } from "../utils/date.util";
@@ -65,30 +68,52 @@ export const deleteTransaction = (realm: Realm, transaction: Transaction) => {
   });
 }
 
-export const importData = (realm: Realm, listTransaction: Array<Transaction>, setAppConfig: (config: IConfig) => void) => {
+export const importData = (realm: Realm, listTransaction: Array<ITransaction>, setAppConfig: (config: IConfig) => void) => {
+  const tempListCategory = listTransaction.reduce((acc, currentValue) => {
+    const foundCategory = acc.find(category => category._id === currentValue.balance.category._id);
+    if(!foundCategory) acc.push(currentValue.balance.category);
+    return acc;
+  }, [] as Array<ICategory>);
+
+  const tempListBalance = listTransaction.reduce((acc, currentValue) => {
+    const foundBalance = acc.find(balance => balance._id === currentValue.balance._id);
+    if(!foundBalance) acc.push(currentValue.balance);
+    return acc;
+  }, [] as Array<IBalance>);
+
   realm.write(() => {
+    tempListCategory.forEach((category) => {
+      realm.create(Category.name, {
+        ...category,
+        _id: new Realm.BSON.UUID(category._id)
+      });
+    });
+
+    const listCategory = realm.objects<Category>(Category.name);
+
+    tempListBalance.forEach((balance) => {
+      const category = listCategory.find(category => category._id == balance.category._id);
+      realm.create(Balance.name, {
+        ...balance,
+        category,
+        _id: new Realm.BSON.UUID(balance._id)
+      });
+    });
+
+    const listBalance = realm.objects<Balance>(Balance.name);
+
     listTransaction.forEach((transaction) => {
-      const newCategory = { 
-        ...transaction.balance.category, 
-        _id: new Realm.BSON.UUID(transaction.balance.category._id) 
-      };
-
-      const newBalance = {
-        ...transaction.balance, 
-        _id: new Realm.BSON.UUID(transaction.balance._id), 
-        category: newCategory
-      };
-
-      realm.create('Transaction', { 
-        ...transaction, 
-        _id: new Realm.BSON.UUID(transaction._id),
-        balance: newBalance
-      })
+      const balance = listBalance.find(balance => balance._id == transaction.balance._id);
+      realm.create(Transaction.name, {
+        ...transaction,
+        balance,
+        _id: new Realm.BSON.UUID(transaction._id)
+      });
     });
 
     const lastDueDate = listTransaction[listTransaction.length - 1].balance.dueDate;
 
-    const newAppConfig = realm.create<Config>('Config', {
+    const newAppConfig = realm.create<Config>(Config.name, {
       darkTheme: true,
       dayToRenewBalance: '20',
       dateToRenewBalance: isDateSameOrAfterToday(lastDueDate) ? lastDueDate : getNextMonthDate()
@@ -97,11 +122,9 @@ export const importData = (realm: Realm, listTransaction: Array<Transaction>, se
     setAppConfig(newAppConfig);
 
     if(!isDateSameOrAfterToday(lastDueDate)){
-      const listCategory = realm.objects<Category>('Category');
       listCategory.forEach((category) => {
-        realm.create('Balance', {
+        realm.create(Balance.name, {
           category,
-          _id: new Realm.BSON.UUID(),
           budget: category.budget,
           totalExpenses: 0,
           dueDate: newAppConfig.dateToRenewBalance,
