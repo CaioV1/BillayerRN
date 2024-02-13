@@ -1,8 +1,9 @@
 import Realm from "realm";
 import { Results } from "realm/dist/bundle";
 
-import Balance from "../models/schemas/BalanceSchema";
+import IBalance from "../models/interfaces/Balance";
 import ICategory from '../models/interfaces/Category';
+import Balance from "../models/schemas/BalanceSchema";
 import Category from "../models/schemas/CategorySchema";
 import Transaction from "../models/schemas/TransactionSchema";
 
@@ -64,5 +65,23 @@ export const deleteCategory = (
     });
     
     realm.delete(category);
+  });
+}
+
+export const fillOutBalancesByCategories = (realm: Realm, dueDate: string) => {
+  const listBalance = realm.objects<IBalance>('Balance').filter(balance => balance.dueDate === dueDate);
+  const listCategory = realm.objects<ICategory>('Category');
+
+  listCategory.forEach(category => {
+    const balance = listBalance.find((balance) => category._id!.toString() === balance.category._id.toString());
+    if(!balance) realm.write(() => {
+      realm.create(Balance.name, {
+        category,
+        totalExpenses: 0,
+        dueDate: dueDate,
+        budget: category.budget,
+        _id: new Realm.BSON.UUID(),
+      })
+    })
   });
 }

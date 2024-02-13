@@ -11,6 +11,7 @@ import Category from "../models/schemas/CategorySchema";
 import Transaction from "../models/schemas/TransactionSchema";
 
 import { getDefaultDateFormat, getNextMonthDate, isDateSameOrAfterToday } from "../utils/date.util";
+import { fillOutBalancesByCategories } from "./category.service";
 
 export const createTransaction = (realm: Realm, transaction: ITransaction) => {
   const floatValue = parseFloat(transaction.value!.toString().replace(',', '.'));
@@ -81,6 +82,8 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
     return acc;
   }, [] as Array<IBalance>);
 
+  let lastDueDate: string = '';
+
   realm.write(() => {
     tempListCategory.forEach((category) => {
       realm.create(Category.name, {
@@ -111,7 +114,7 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
       });
     });
 
-    const lastDueDate = listTransaction[listTransaction.length - 1].balance.dueDate;
+    lastDueDate = listTransaction[listTransaction.length - 1].balance.dueDate;
 
     const newAppConfig = realm.create<Config>(Config.name, {
       darkTheme: true,
@@ -132,4 +135,6 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
       });
     }
   });
+
+  fillOutBalancesByCategories(realm, lastDueDate);
 }

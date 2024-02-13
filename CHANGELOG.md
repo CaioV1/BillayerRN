@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2024-02-13
+
+### Changed
+
+- Fix error that do not create balance if there is no transactions for it at import balances feature.
+
 ## [1.2.1] - 2023-12-14
 
 ### Changed
