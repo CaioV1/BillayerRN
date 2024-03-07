@@ -1,48 +1,34 @@
 import React from "react";
-import { ScrollView, SectionList, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-import Tab from "../../models/interfaces/Tab";
-import Balance from "../../models/interfaces/Balance";
-import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
 import { listMenu } from "../../resources/static/menuBalance";
-import { DETAIL_CATEGORY_TABS } from "../../resources/values/consts";
-import { listImgBase64 } from "../../resources/static/categoriesImages";
 
 import { convertToMoney } from "../../utils/string.util";
-import { ImageButton, ItemFlatList, SectionHeader, Tabs } from "../../components";
+
+import { ImageButton, Tab } from "../../components";
+import { DetailedTabComponent, ResumedTabComponent } from "./components";
 
 import { styles } from "./styles";
 import useDetailCategory from "./hooks/useDetailCategory";
 
+export const TOTAL_TABS = 2;
+export const RESUMED_TAB_ID = 1;
+export const DETAILED_TAB_ID = 2;
+
 type DetailCategoryProps = NativeStackScreenProps<RootStackParamList, 'DetailCategory'>;
 
 const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) => {
-  const { balance, filteredBalanceList, formatedTransactionList, selectedTab, allExpensesResult, getBalanceFromTransactions, setSelectedTab, onDeleteButtonPress } = useDetailCategory({ route, navigation });
-
-  const renderSectionHeader = (title: string, value: number) => (
-    <SectionHeader title={title} value={convertToMoney(value)}/>
-  )
-
-  const renderItemTransaction = (transaction: Transaction) => (
-    <ItemFlatList 
-      title={transaction.name} 
-      value={convertToMoney(transaction.value)} 
-      icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
-      subtitle={transaction.createdAt} 
-    />
-  )
-
-  const renderItem = (item: Balance) => (
-    <ItemFlatList 
-      key={item._id!.toString()}
-      title={item.dueDate} 
-      value={convertToMoney(item.totalExpenses)} 
-      icon={listImgBase64.find((imgBase64) => imgBase64.id === item.category.iconId)?.data}
-    />
-  )
+  const { 
+    balance, 
+    filteredBalanceList, 
+    formatedTransactionList, 
+    allExpensesResult, 
+    getBalanceFromTransactions, 
+    onDeleteButtonPress 
+  } = useDetailCategory({ route, navigation });
 
   return (
     <View>
@@ -54,31 +40,18 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
         <ImageButton buttonTitle='Edit' imageBase64={listMenu[5].data} onPress={() => navigation.navigate('CreateCategory', { category: balance.category })} />
         <ImageButton buttonTitle='Delete' imageBase64={listMenu[6].data} onPress={() => onDeleteButtonPress()} />
       </View>
-      <Tabs tabs={DETAIL_CATEGORY_TABS} onPress={(tab: Tab) => setSelectedTab(tab)} />
-      {
-        selectedTab.id === 1 ? (
-          <>
-            { filteredBalanceList && <SectionHeader title='Total' value={convertToMoney(allExpensesResult)}/> }
-            <ScrollView showsVerticalScrollIndicator={false}>
-              { filteredBalanceList && Array.from(filteredBalanceList).reverse().map((balance) => renderItem(balance)) }
-            </ScrollView>
-          </>
-        ) : (
-          <>
-            {
-              formatedTransactionList && formatedTransactionList.length > 0 && 
-              <SectionList
-                contentContainerStyle={{paddingBottom: 300}}
-                showsVerticalScrollIndicator={false}
-                sections={formatedTransactionList}
-                keyExtractor={(item) => item._id.toString()}
-                renderSectionHeader={({section }) => renderSectionHeader(section.title, getBalanceFromTransactions(section.data))}
-                renderItem={({item}) => renderItemTransaction(item)}
-              />
-            }
-          </>
-        )
-      }
+      <Tab.Root totalTabs={TOTAL_TABS}>
+        <Tab.Header>
+          <Tab.Title opensTab={RESUMED_TAB_ID}>Resumed</Tab.Title>
+          <Tab.Title opensTab={DETAILED_TAB_ID}>Detailed</Tab.Title>
+        </Tab.Header>
+        <Tab.Content tabId={RESUMED_TAB_ID}>
+          { filteredBalanceList && <ResumedTabComponent filteredBalanceList={filteredBalanceList} allExpensesResult={allExpensesResult} /> }
+          </Tab.Content>
+        <Tab.Content tabId={DETAILED_TAB_ID}>
+          <DetailedTabComponent formatedTransactionList={formatedTransactionList} getBalanceFromTransactions={getBalanceFromTransactions} />
+        </Tab.Content>
+      </Tab.Root>
     </View>
   )
 }
