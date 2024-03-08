@@ -5,7 +5,7 @@ import Transaction from "../schemas/TransactionSchema";
 type RootStackParamList = {
   Transactions: undefined;
   Balance: undefined;
-  CreateTransaction: { transaction?: Transaction };
+  CreateTransaction: { transaction?: Transaction, balance?: Balance };
   CreateCategory: { category?: Category };
   BalanceHistory: undefined;
   DetailCategory: { balance: Balance};

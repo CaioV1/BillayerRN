@@ -37,6 +37,7 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
         <Text style={styles.categoryBudgetText}>{convertToMoney(balance.category.budget)}</Text>
       </View>
       <View style={styles.viewImageButtons}>
+        <ImageButton buttonTitle='Add Transaction' imageBase64={listMenu[2].data} onPress={() => navigation.navigate('CreateTransaction', { balance })} />
         <ImageButton buttonTitle='Edit' imageBase64={listMenu[5].data} onPress={() => navigation.navigate('CreateCategory', { category: balance.category })} />
         <ImageButton buttonTitle='Delete' imageBase64={listMenu[6].data} onPress={() => onDeleteButtonPress()} />
       </View>
@@ -49,7 +50,7 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
           { filteredBalanceList && <ResumedTabComponent filteredBalanceList={filteredBalanceList} allExpensesResult={allExpensesResult} /> }
           </Tab.Content>
         <Tab.Content tabId={DETAILED_TAB_ID}>
-          <DetailedTabComponent formatedTransactionList={formatedTransactionList} getBalanceFromTransactions={getBalanceFromTransactions} />
+          <DetailedTabComponent navigation={navigation} formatedTransactionList={formatedTransactionList} getBalanceFromTransactions={getBalanceFromTransactions} />
         </Tab.Content>
       </Tab.Root>
     </View>

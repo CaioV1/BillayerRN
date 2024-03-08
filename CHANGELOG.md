@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3] - 2024-03-07
+
+### Changed
+
+- Apply the react compound components pattern into the tab component;
+- Changed the detailed category to include redirections to transaction screens.
+
 ## [1.2.2] - 2024-02-13
 
 ### Changed

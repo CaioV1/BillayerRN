@@ -15,6 +15,7 @@ const { useRealm, useQuery } = RealmContext;
 
 const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>) => {
   const paramTransaction = route.params?.transaction;
+  const balance = route.params?.balance;
 
   const realm = useRealm();
   const fullListBalance = useQuery(Balance);
@@ -26,6 +27,7 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
   useEffect(() => {
     setListBalance(fullListBalance.filtered('dueDate == $0', appConfig.dateToRenewBalance));
     paramTransaction && setTransaction(paramTransaction);
+    balance && onChange('balance', balance);
   }, [])
 
   const onChange = (key: string, value: any) => {

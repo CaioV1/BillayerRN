@@ -1,6 +1,7 @@
 import { Alert } from "react-native";
 import { Results } from "realm/dist/bundle";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import Tab from "../../../models/interfaces/Tab";
@@ -18,20 +19,20 @@ const { useRealm, useQuery } = RealmContext;
 
 const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootStackParamList, 'DetailCategory'>) => {
   const { balance } = route.params;
-
+  
   const realm = useRealm();
   const listTransaction = useQuery(Transaction);
   const { listBalance, getBalanceFromData } = useBalance();
-
+  
   const [allExpensesResult, setAllExpensesResult] = useState<number>(0);
   const [selectedTab, setSelectedTab] = useState<Tab>(DETAIL_CATEGORY_TABS[0]);
   const [filteredBalanceList, setFilteredBalanceList] = useState<Results<Balance>>();
   const [formatedTransactionList, setFormatedTransactionList] = useState<Array<{title: string, data: Array<Transaction>}>>();
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     setFilteredBalanceList(listBalance.filtered('category._id == $0', balance.category._id));
     setFormatedTransactionList(formatTransactionList());
-  }, []);
+  }, []));
 
   useEffect(() => {
     filteredBalanceList && setAllExpensesResult(filteredBalanceList.reduce((acc, balance) => acc + balance.totalExpenses, 0))

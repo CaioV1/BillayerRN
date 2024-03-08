@@ -54,7 +54,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
           >
               {
                 listBalance.map((balance) => 
-                  <Select.Item key={balance._id.toString()} label={balance.category.name} value={balance._id.toString()} />
+                  <Select.Item key={balance?._id.toString()} label={balance.category.name} value={balance._id.toString()} />
                 )
               }
           </Select>
