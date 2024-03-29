@@ -12,15 +12,18 @@ With the renew balance feature you can reset all your expenses generating a new 
 
 The app doesn't use any external API and stores all the data in the app itself using <a href="https://www.mongodb.com/docs/realm/">Realm</a>.
 
-Here's some examples of the project running in both IOS and Android platforms:
+## Preview
+Here's some examples of the project running in both IOS and Android platforms.
 
-### IOS Example
+<h3 align="center">IOS Preview</h3>
+<p align="center">
+   <img src="public/project_example.gif" alt="Logo" width="250" height="530">
+</p>
 
-<img src="public/project_example.gif" alt="Logo" width="250" height="530">
-
-### Android Example
-
-<img src="public/project_example_2.gif" alt="Logo" width="290" height="530">
+<h3 align="center">Android Preview</h3>
+<p align="center">
+   <img src="public/project_example_2.gif" alt="Logo" width="290" height="530">
+</p>
 
 # Getting Started
 
