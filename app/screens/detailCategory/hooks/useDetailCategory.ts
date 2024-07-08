@@ -12,17 +12,19 @@ import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 import { DETAIL_CATEGORY_TABS } from "../../../resources/values/consts";
 
 import useBalance from "../../../hooks/useBalance";
+import useTransaction from "../../../hooks/useTransaction";
+
 import { RealmContext } from "../../../configs/RealmContext";
 import * as categoryService from '../../../services/category.service';
 
-const { useRealm, useQuery } = RealmContext;
+const { useRealm } = RealmContext;
 
 const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootStackParamList, 'DetailCategory'>) => {
   const { balance } = route.params;
   
   const realm = useRealm();
-  const listTransaction = useQuery(Transaction);
   const { listBalance, getBalanceFromData } = useBalance();
+  const { listTransaction, formatTransactionListToSection, getBalanceFromTransactions } = useTransaction();
   
   const [allExpensesResult, setAllExpensesResult] = useState<number>(0);
   const [selectedTab, setSelectedTab] = useState<Tab>(DETAIL_CATEGORY_TABS[0]);
@@ -31,7 +33,7 @@ const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootSta
 
   useFocusEffect(useCallback(() => {
     setFilteredBalanceList(listBalance.filtered('category._id == $0', balance.category._id));
-    setFormatedTransactionList(formatTransactionList());
+    setFormatedTransactionList(formatTransactionListToSection(listTransaction.filtered('balance.category._id == $0', balance.category._id)));
   }, []));
 
   useEffect(() => {
@@ -54,25 +56,6 @@ const useDetailCategory = ({ navigation, route }: NativeStackScreenProps<RootSta
       { text: 'No', onPress: () => {} }
     ])
   }
-
-  const formatTransactionList = (): Array<{title: string, data: Array<Transaction>}> => {
-    const tempList: Array<{title: string, data: Array<Transaction>}> = [];
-    return Array.from(listTransaction.filtered('balance.category._id == $0', balance.category._id)).reverse().reduce((acc, transaction) => {
-      const balanceFound = acc.find((item) => item.title === transaction.balance.dueDate);
-      if(balanceFound) {
-        acc.map((item) => {
-          if(item.title === transaction.balance.dueDate) item.data.push(transaction);
-          return item;
-        })
-      } else {
-        acc.push({ title: transaction.balance.dueDate, data: [transaction] });
-      }
-
-      return acc;
-    }, tempList)
-  }
-
-  const getBalanceFromTransactions = (listTransaction: Array<Transaction>): number => listTransaction.reduce((acc, transaction) => acc + transaction.value,0)
   
   return {
     balance,

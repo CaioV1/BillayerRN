@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { Results } from "realm/dist/bundle";
 
 import Balance from "../../../../models/schemas/BalanceSchema";
@@ -23,14 +23,14 @@ const ResumedTabComponent: React.FC<ResumedTabComponentProps> = ({ filteredBalan
   )
 
   return (
-    <>
+    <View style={{ paddingBottom: 750 }}>
       <SectionHeader title='Total' value={convertToMoney(allExpensesResult)}/>
       <FlatList 
         showsVerticalScrollIndicator={false} 
         data={Array.from(filteredBalanceList).reverse()} 
         renderItem={({ item }) => renderItem(item)}
       />
-    </>
+    </View>
   )
 }
 

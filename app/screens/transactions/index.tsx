@@ -1,46 +1,62 @@
-import React from "react"
-import { ScrollView, TouchableOpacity, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { SectionList, TouchableOpacity } from "react-native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { BottomButton, ItemFlatList } from "../../components";
-import { RealmContext } from "../../configs/RealmContext";
+import { BottomButton, ItemFlatList, SectionHeader } from "../../components";
 import { convertToMoney } from "../../utils/string.util";
 import { listImgBase64 } from "../../resources/static/categoriesImages";
-
-const { useQuery } = RealmContext;
+import useTransaction from "../../hooks/useTransaction";
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 
 const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) => {
-  const response = useQuery(Transaction);
+  const { 
+    listTransaction, 
+    formatTransactionListToSection, 
+    getBalanceFromTransactions 
+  } = useTransaction();
 
-  const renderTransactions = (transaction: Transaction) => {
-    return (
-      <TouchableOpacity key={transaction._id!.toString()} onPress={() => navigation.navigate('DetailTransaction', { transaction })}>
-        <ItemFlatList 
-          title={transaction.name} 
-          value={convertToMoney(transaction.value)} 
-          icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
-          subtitle={transaction.createdAt} 
-        />
-      </TouchableOpacity>
-    )
-  }
+  const [formatedTransactionList, setFormatedTransactionList] = useState<Array<{title: string, data: Array<Transaction>}>>();
+
+  useEffect(() => {
+    setFormatedTransactionList(formatTransactionListToSection(listTransaction));
+  }, []);
+
+  const renderSectionHeader = (title: string, value: number) => (
+    <SectionHeader title={title} value={convertToMoney(value)}/>
+  )
+
+  const renderItem = (transaction: Transaction) => (
+    <TouchableOpacity key={transaction._id!.toString()} onPress={() => navigation.navigate('DetailTransaction', { transaction })}>
+      <ItemFlatList 
+        title={transaction.name} 
+        value={convertToMoney(transaction.value)} 
+        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
+        subtitle={transaction.createdAt} 
+      />
+    </TouchableOpacity>
+  )
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>
-        {
-          response && Array.from(response).reverse().map((item) => renderTransactions(item))
-        }  
-      </ScrollView>
+    <>
+      {
+        formatedTransactionList && formatedTransactionList.length > 0 && 
+        <SectionList
+          contentContainerStyle={{paddingBottom: 80}}
+          showsVerticalScrollIndicator={false}
+          sections={formatedTransactionList}
+          keyExtractor={(item) => item._id.toString()}
+          renderSectionHeader={({section }) => renderSectionHeader(section.title, getBalanceFromTransactions(section.data))}
+          renderItem={({item}) => renderItem(item)}
+        />
+      }
       <BottomButton title="Add Transaction" onButtonPress={() => {
         navigation.navigate('CreateTransaction', {});
       }}/>
-    </View>
+    </>
   )
 }
 

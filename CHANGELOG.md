@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0] - 2024-07-08
+
+### Added
+
+- Organize the data at list transaction screen by section;
+- Create useTransaction hook to reuse transaction states.
+
+### Changed
+
+- Fix the flat list layout scroll at resumed category tab;
+- Sorted the categories at the initial screen.
+
 ## [1.2.3] - 2024-03-07
 
 ### Changed

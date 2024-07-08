@@ -48,7 +48,7 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
         </Tab.Header>
         <Tab.Content tabId={RESUMED_TAB_ID}>
           { filteredBalanceList && <ResumedTabComponent filteredBalanceList={filteredBalanceList} allExpensesResult={allExpensesResult} /> }
-          </Tab.Content>
+        </Tab.Content>
         <Tab.Content tabId={DETAILED_TAB_ID}>
           <DetailedTabComponent navigation={navigation} formatedTransactionList={formatedTransactionList} getBalanceFromTransactions={getBalanceFromTransactions} />
         </Tab.Content>

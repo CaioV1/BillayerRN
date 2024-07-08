@@ -60,7 +60,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
             />
             <SectionHeader title='Balance category'/>
             {
-              appConfig?.dateToRenewBalance && listBalance?.filtered('dueDate == $0', appConfig.dateToRenewBalance).map((item) => renderCategories(item))
+              appConfig?.dateToRenewBalance && listBalance?.filtered('dueDate == $0', appConfig.dateToRenewBalance).sorted('category.name', true).map((item) => renderCategories(item))
             }
           </ScrollView>
         )
