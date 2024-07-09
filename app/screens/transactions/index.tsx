@@ -6,10 +6,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import Transaction from "../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { BottomButton, ItemFlatList, SearchInput, SectionHeader } from "../../components";
-import { convertToMoney } from "../../utils/string.util";
-import { listImgBase64 } from "../../resources/static/categoriesImages";
 import useTransaction from "../../hooks/useTransaction";
+import { convertToMoney } from "../../utils/string.util";
+import { BottomButton, ItemFlatList, SearchInput, SectionHeader } from "../../components";
+
+import { listImgBase64 } from "../../resources/static/categoriesImages";
+import { SEARCH_TEXT_MINIMUM_LENGTH } from "../../resources/values/consts";
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 
@@ -67,7 +69,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
         />
       }
       {
-        (!filteredList || filteredList.length === 0) && formatedTransactionList && formatedTransactionList.length > 0 && 
+        searchValue.length <= SEARCH_TEXT_MINIMUM_LENGTH && formatedTransactionList && formatedTransactionList.length > 0 && 
         <SectionList
           contentContainerStyle={{paddingBottom: 80}}
           showsVerticalScrollIndicator={false}
