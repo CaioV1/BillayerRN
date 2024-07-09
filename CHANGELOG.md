@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2] - 2024-07-09
+
+### Changed
+
+- Implement search component in transactions screen;
+- Remove search screen from menu.
+
 ## [1.4.1] - 2024-07-09
 
 ### Changed
