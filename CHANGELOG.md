@@ -4,7 +4,8 @@
 
 ### Changed
 
-- Fix error in delete transaction feature.
+- Fix error in delete transaction feature;
+- Fix input props at search component.
 
 ## [1.4.0] - 2024-07-09
 

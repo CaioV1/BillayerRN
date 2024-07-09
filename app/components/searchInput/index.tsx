@@ -38,7 +38,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
         value={searchValue}
         variant="underlined" 
         placeholder={placeholder}
-        keyboardType='numeric'
         returnKeyType='done'
         onChangeText={onChange} 
       />
