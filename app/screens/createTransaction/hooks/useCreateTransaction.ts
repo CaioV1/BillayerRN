@@ -5,8 +5,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import Balance from "../../../models/schemas/BalanceSchema";
 import ITransaction from '../../../models/interfaces/Transaction';
+import Transaction from "../../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
+import useTransaction from "../../../hooks/useTransaction";
 import { RealmContext } from "../../../configs/RealmContext";
 import { AppConfigContext } from "../../../context/appConfig.context";
 import { createTransaction, updateTransaction } from "../../../services/transaction.service";
@@ -20,6 +22,7 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
   const realm = useRealm();
   const fullListBalance = useQuery(Balance);
   const { appConfig } = useContext(AppConfigContext);
+  const { searchValue, setSearchValue, filteredList } = useTransaction();
 
   const [listBalance, setListBalance] = useState<Results<Balance>>();
   const [transaction, setTransaction] = useState<Partial<ITransaction>>();
@@ -55,6 +58,13 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
     if(!pattern.test(transaction.value.toString())) return "Please fill only numbers in the value field"; 
   }
 
+  const onPressSearchItem = (transaction: Transaction) => { 
+    setTransaction(transaction); 
+    setSearchValue(''); 
+    const results = listBalance!.filtered('category._id == $0', transaction.balance.category._id);
+    results && results.length > 0 && onChange('balance', results[0]); 
+  }
+
   const onButtonPress = () => {
     const validationResult = validateFields();
 
@@ -84,9 +94,14 @@ const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<Root
     transaction,
     listBalance,
     paramTransaction,
+    searchValue, 
+    filteredList,
+    onPressSearchItem,
+    setTransaction,
+    setSearchValue,
     onCategorySelected,
     onChange,
-    onButtonPress  
+    onButtonPress
   }
 }
 

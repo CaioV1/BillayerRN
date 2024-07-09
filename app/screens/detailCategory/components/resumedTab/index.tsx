@@ -23,7 +23,7 @@ const ResumedTabComponent: React.FC<ResumedTabComponentProps> = ({ filteredBalan
   )
 
   return (
-    <View style={{ paddingBottom: 750 }}>
+    <View style={{ marginBottom: 750 }}>
       <SectionHeader title='Total' value={convertToMoney(allExpensesResult)}/>
       <FlatList 
         showsVerticalScrollIndicator={false} 

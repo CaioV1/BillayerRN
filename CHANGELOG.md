@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2024-07-09
+
+### Added
+
+- Create search component;
+- Create search transaction screen;
+- Implement search component in create transaction screen;
+
 ## [1.3.0] - 2024-07-08
 
 ### Added
