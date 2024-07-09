@@ -19,7 +19,7 @@ const useDetailTransaction = ({ navigation, route }: NativeStackScreenProps<Root
   const deleteTransaction = () => {
     try {
       transactionService.deleteTransaction(realm, transaction);
-      navigation.goBack();
+      navigation.navigate('Balance');
     } catch (error) {
       Alert.alert('An error has occurred while deleting the transaction');
       console.log(error);
