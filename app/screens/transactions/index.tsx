@@ -33,7 +33,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
     setFormatedTransactionList(formatTransactionListToSection(listTransaction));
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => setShowSearch((previousValue) => !previousValue)}>
+        <TouchableOpacity onPress={() => setShowSearch(true)}>
           <SearchIcon size='5' color='black' />
         </TouchableOpacity>
       )
@@ -65,7 +65,9 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
           listItems={filteredList}
           totalValue={totalValue}
           renderListItem={renderItem}
+          onClosePress={() => { setShowSearch(false); setSearchValue(''); }}
           onChange={(text: string) => setSearchValue(text)}
+          flatListStyle={{ marginBottom: 80 }}
         />
       }
       {

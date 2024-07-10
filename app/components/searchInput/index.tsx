@@ -1,7 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Results } from "realm/dist/bundle";
-import { FlatList, Input } from "native-base";
+import { FlatList, Input, CloseIcon } from "native-base";
 
 import SectionHeader from "../sectionHeader";
 import { convertToMoney } from "../../utils/string.util";
@@ -17,6 +17,7 @@ interface SearchInputProps {
   totalValue?: number;
   listItems?: Results<any>;
   flatListStyle?: any;
+  onClosePress?: () => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ 
@@ -26,7 +27,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
   listItems, 
   flatListStyle,
   placeholder = 'Value',
-  totalValue = 0
+  totalValue = 0,
+  onClosePress
 }) => {
   return (
     <>
@@ -40,6 +42,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder={placeholder}
         returnKeyType='done'
         onChangeText={onChange} 
+        InputRightElement={
+          onClosePress && 
+          <TouchableOpacity onPress={onClosePress}>
+            <CloseIcon size='5' color='black' />
+          </TouchableOpacity>
+        }
       />
       {
         listItems && listItems.length > 0 && 
@@ -48,7 +56,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           <FlatList
             style={flatListStyle}
             showsVerticalScrollIndicator={false} 
-            data={listItems}
+            data={Array.from(listItems).reverse()}
             renderItem={({item}) => renderListItem(item)}
           />
         </>

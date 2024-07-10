@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.3] - 2024-07-10
+
+### Changed
+
+- Close button option in search component;
+- Revert flast list data order in search component;
+- Fix margin bottom in the flat list from search component;
+
 ## [1.4.2] - 2024-07-09
 
 ### Changed
