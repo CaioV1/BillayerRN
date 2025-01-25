@@ -11,6 +11,7 @@ type RootStackParamList = {
   DetailCategory: { balance: Balance};
   DetailTransaction: { transaction: Transaction };
   SearchTransaction: undefined;
+  FilterTransaction: undefined;
 };
 
 export default RootStackParamList;

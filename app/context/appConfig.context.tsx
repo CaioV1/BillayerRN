@@ -28,15 +28,14 @@ const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ chi
   const response = useQuery(Config);
   const listCategory = useQuery(Category);
 
-  const [appConfig, setAppConfig] = useState<IConfig>();
+  const [appConfig, setAppConfig] = useState<IConfig>(() => response.length > 0 ? response[0] : {} as IConfig);
 
   useEffect(() => {
     createConfigIfDoesntExist();
   }, [])
 
   const createConfigIfDoesntExist = () => {
-    if(response.length > 0){
-      setAppConfig(response[0]);
+    if(appConfig?.dateToRenewBalance) {
       return
     }
 

@@ -71,7 +71,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
         />
       }
       {
-        searchValue.length <= SEARCH_TEXT_MINIMUM_LENGTH && formatedTransactionList && formatedTransactionList.length > 0 && 
+        searchValue !== '.' && searchValue.length <= SEARCH_TEXT_MINIMUM_LENGTH && formatedTransactionList && formatedTransactionList.length > 0 && 
         <SectionList
           contentContainerStyle={{paddingBottom: 80}}
           showsVerticalScrollIndicator={false}

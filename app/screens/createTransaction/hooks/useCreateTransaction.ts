@@ -10,25 +10,23 @@ import RootStackParamList from "../../../models/interfaces/RootScreensParams";
 
 import useTransaction from "../../../hooks/useTransaction";
 import { RealmContext } from "../../../configs/RealmContext";
-import { AppConfigContext } from "../../../context/appConfig.context";
 import { createTransaction, updateTransaction } from "../../../services/transaction.service";
+import useBalance from "../../../hooks/useBalance";
 
-const { useRealm, useQuery } = RealmContext;
+const { useRealm } = RealmContext;
 
 const useCreateTransaction = ({ route, navigation }: NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>) => {
   const paramTransaction = route.params?.transaction;
   const balance = route.params?.balance;
 
   const realm = useRealm();
-  const fullListBalance = useQuery(Balance);
-  const { appConfig } = useContext(AppConfigContext);
+  const { listBalance, setCurrentBalanceList } = useBalance();
   const { searchValue, setSearchValue, filteredList } = useTransaction();
 
-  const [listBalance, setListBalance] = useState<Results<Balance>>();
   const [transaction, setTransaction] = useState<Partial<ITransaction>>();
 
   useEffect(() => {
-    setListBalance(fullListBalance.filtered('dueDate == $0', appConfig.dateToRenewBalance));
+    setCurrentBalanceList();
     paramTransaction && setTransaction(paramTransaction);
     balance && onChange('balance', balance);
   }, [])

@@ -7,7 +7,8 @@ import {
   DetailCategoryScreen, 
   DetailTransactionScreen, 
   TransactionsScreen,
-  SearchTransactionScreen
+  SearchTransactionScreen,
+  FilterTransactionScreen
 } from "./screens";
 
 const routes: Array<Route> = [
@@ -50,6 +51,11 @@ const routes: Array<Route> = [
     name: 'SearchTransaction',
     title: 'Search Transaction',
     component: SearchTransactionScreen
+  },
+  {
+    name: 'FilterTransaction',
+    title: 'Filter',
+    component: FilterTransactionScreen
   },
 ];
 

@@ -6,3 +6,4 @@ export { default as BalanceHistoryScreen } from './balanceHistory';
 export { default as DetailCategoryScreen } from './detailCategory';
 export { default as DetailTransactionScreen } from './detailTransaction';
 export { default as SearchTransactionScreen } from './searchTransaction';
+export { default as FilterTransactionScreen } from './filterTransaction';

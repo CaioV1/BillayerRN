@@ -28,6 +28,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
     <ImageButton buttonTitle='Add Transaction' imageBase64={listMenu[2].data} onPress={() => navigation.navigate('CreateTransaction', {})} />
     <ImageButton buttonTitle='Add Category' imageBase64={listMenu[1].data} onPress={() => navigation.navigate('CreateCategory', {})} />
     <ImageButton buttonTitle='Renew Balance' imageBase64={listMenu[4].data} onPress={onRenewButtonPress} />
+    <ImageButton buttonTitle='Filter Transaction' imageBase64={listMenu[10].data} onPress={() => navigation.navigate('FilterTransaction')} />
     <ImageButton buttonTitle='Export Balances' imageBase64={listMenu[7].data} onPress={onExportButtonPress} />
     <ImageButton buttonTitle='Import Balances' imageBase64={listMenu[8].data} lastItem onPress={onImportButtonPress} />
   </ScrollView>

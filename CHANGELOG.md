@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0] - 2025-01-24
+
+### Added
+
+- Filter transactions screen.
+
+### Changed
+
+- Fix the bug of showing two flat list in transaction screen when search all;
+- Fix bug of not initialize app config state in context;
+- Implement useBalance hook in create transaction to unifying the feature.
+
 ## [1.4.3] - 2024-07-10
 
 ### Changed

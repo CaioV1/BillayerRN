@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Results } from "realm/dist/bundle";
 
 import { RealmContext } from "../configs/RealmContext";
 import Transaction from "../models/schemas/TransactionSchema";
 import { SEARCH_TEXT_MINIMUM_LENGTH } from "../resources/values/consts";
+import Filter from "../models/interfaces/Filter";
 
 const { useQuery } = RealmContext;
 
@@ -11,10 +12,15 @@ const useTransaction = () => {
   const listTransaction = useQuery(Transaction);
 
   const [searchValue, setSearchValue] = useState<string>('');
+  const [filteredList, setFilteredList] = useState<Results<Transaction> | undefined>();
 
-  const filteredList: Results<Transaction> | undefined = useMemo(() => {
-    if(searchValue === '.') return listTransaction;
-    return searchValue.length > SEARCH_TEXT_MINIMUM_LENGTH ? listTransaction.filtered('name CONTAINS[c] $0 ', searchValue) : undefined;
+  useEffect(() => {
+    if(searchValue === '.') {
+      setFilteredList(listTransaction);
+      return;
+    }
+
+    setFilteredList(searchValue.length > SEARCH_TEXT_MINIMUM_LENGTH ? listTransaction.filtered('name CONTAINS[c] $0 ', searchValue) : undefined);
   }, [searchValue])
 
   const totalValue: number = useMemo(() => {
@@ -40,6 +46,17 @@ const useTransaction = () => {
 
   const getBalanceFromTransactions = (listTransaction: Array<Transaction>): number => listTransaction.reduce((acc, transaction) => acc + transaction.value,0)
 
+  const filterTransactions = (filterForm?: Filter) => {
+    let tempList = listTransaction;
+
+    if(filterForm?.transactionName) tempList = tempList.filtered('name CONTAINS[c] $0', filterForm.transactionName);
+    if(filterForm?.month) tempList = tempList.filtered('createdAt CONTAINS[c] $0', `/${filterForm.month}/`);
+    if(filterForm?.year) tempList = tempList.filtered('createdAt CONTAINS[c] $0', `/${filterForm.year}`);
+    if(filterForm?.category) tempList = tempList.filtered('balance.category._id == $0', new Realm.BSON.UUID(filterForm?.category));
+
+    setFilteredList(tempList);
+  }
+
   return {
     listTransaction,
     searchValue,
@@ -47,7 +64,8 @@ const useTransaction = () => {
     totalValue,
     setSearchValue,
     formatTransactionListToSection,
-    getBalanceFromTransactions
+    getBalanceFromTransactions,
+    filterTransactions
   }
 }
 

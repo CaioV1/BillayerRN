@@ -12,6 +12,20 @@ export const getNextMonthDate = (): string => {
   return moment(new Date()).add(1, 'month').format('DD/MM/YYYY');
 }
 
+export const getListMonths = (): string[] => {
+  return moment.months();
+}
+
+export const getListYears = (dateParam?: string): number[] => {
+  const year = new Date().getFullYear();
+  const date = dateParam ? moment(dateParam, 'DD/MM/YYYY') : moment();
+
+  //Count of years since the first transaction
+  const countYears = moment().year() - (date.year() - 1);
+
+  return Array.from({length: countYears}, (v, i) => year - countYears + i + 1).reverse();
+}
+
 export const getDateToRenewBalance = (dayToRenew: string, oldDate: string): string => {
   const todayDate = new Date()
   const formatedOldDate = moment(oldDate, 'DD/MM/YYYY');
