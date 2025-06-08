@@ -11,13 +11,14 @@ import { listImgBase64 } from "../../resources/static/categoriesImages";
 import { convertToMoney } from "../../utils/string.util";
 import { ImageButton } from "../../components";
 
-import { styles } from "./styles";
+import { useStyle } from "./styles";
 import useDetailTransaction from "./hooks/useDetailTransaction";
 
 type DetailTransactionProps = NativeStackScreenProps<RootStackParamList, 'DetailTransaction'>;
 
 const DetailTransaction: React.FC<DetailTransactionProps> = ({ route, navigation }) => {
   const { appConfig, transaction, onDeleteButtonPress } = useDetailTransaction({ route, navigation });
+  const styles = useStyle();
 
   return (
     <View style={styles.viewContainer}>
