@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react"
 import { Dimensions, Text, TouchableOpacity, View } from "react-native"
 
-import { styles } from "./styles"
+import { useStyle } from "./styles"
 import { ContentProps, TabComponentProps, TitleProps } from "./types";
 
 const windowWidth = Dimensions.get('window').width 
@@ -22,13 +22,17 @@ const TabCompoment: React.FC<TabComponentProps> = ({ totalTabs, children }) => {
   )
 }
 
-const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <View style={styles.viewContainer}>
-    {children}
-  </View>
-)
+const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const styles = useStyle();
+  return (
+    <View style={styles.viewContainer}>
+      {children}
+    </View>
+  )
+}
 
 const Title: React.FC<TitleProps> = ({ opensTab, children }) => {
+  const styles = useStyle();
   const { totalTabs, selectedTab, setSelectedTab } = useContext(TabContext)!;
 
   const tabViewStyle = selectedTab === opensTab ? styles.selectedTabView : styles.tabView;

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2025-06-08
+
 ### Added
 
 - Dark mode theme

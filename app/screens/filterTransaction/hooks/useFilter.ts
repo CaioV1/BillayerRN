@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
-import useBalance from "../../../hooks/useBalance";
-import { getListMonths, getListYears } from "../../../utils/date.util";
-import useTransaction from "../../../hooks/useTransaction";
-import Filter from "../../../models/interfaces/Filter";
-import { Results } from "realm/dist/bundle";
-import Transaction from "../../../models/schemas/TransactionSchema";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
+
+import useBalance from "../../../hooks/useBalance";
+import useTransaction from "../../../hooks/useTransaction";
+
+import Filter from "../../../models/interfaces/Filter";
+
+import { getListMonths, getListYears } from "../../../utils/date.util";
 
 const useFilter = () => {
   const { 

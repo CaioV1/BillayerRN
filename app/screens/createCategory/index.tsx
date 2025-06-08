@@ -9,13 +9,15 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 import { BottomButton, ImageSelector } from "../../components";
 import { listImgBase64 } from "../../resources/static/categoriesImages";
 
-import { styles } from "./styles";
+import { useStyles } from "./styles";
 import useCreateCategory from "./hooks/useCreateCategory";
 
 type CreateCategoryScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateCategory'>;
 
 const CreateCategoryScreen: React.FC<CreateCategoryScreenProps> = ({ route, navigation }) => {
+  const styles = useStyles();
   const { paramCategory, category, onChange, onButtonPress } = useCreateCategory({ route, navigation });
+  
   return (
     <View style={styles.viewContainer}>
       <ScrollView style={{marginBottom: 80}} showsVerticalScrollIndicator={false}>

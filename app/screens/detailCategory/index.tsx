@@ -11,7 +11,7 @@ import { convertToMoney } from "../../utils/string.util";
 import { ImageButton, Tab } from "../../components";
 import { DetailedTabComponent, ResumedTabComponent } from "./components";
 
-import { styles } from "./styles";
+import { useStyle } from "./styles";
 import useDetailCategory from "./hooks/useDetailCategory";
 
 export const TOTAL_TABS = 2;
@@ -29,6 +29,8 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
     getBalanceFromTransactions, 
     onDeleteButtonPress 
   } = useDetailCategory({ route, navigation });
+
+  const styles = useStyle();
 
   return (
     <View>

@@ -1,5 +1,6 @@
 import React from "react";
 import { SectionList, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import Balance from "../../models/interfaces/Balance";
@@ -16,9 +17,10 @@ type BalanceHistoryProps = NativeStackScreenProps<RootStackParamList, 'BalanceHi
 
 const BalanceHistory: React.FC<BalanceHistoryProps> = ({ navigation }) => {
   const { listFormattedBalance, getBalanceFromData } = useBalanceHistory(navigation);
+  const { colors } = useTheme();
 
   const renderSectionHeader = (title: string, value: number) => (
-    <SectionHeader title={title} value={convertToMoney(value)} valueColor={value > 0 ? DEFAULT_BLACK : DEFAULT_RED}/>
+    <SectionHeader title={title} value={convertToMoney(value)} valueColor={value > 0 ? colors.text : DEFAULT_RED}/>
   )
 
   const renderItem = (item: Balance) => (

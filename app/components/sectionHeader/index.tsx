@@ -1,8 +1,8 @@
 import React from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, View } from "react-native"
 
-import { styles } from "./styles";
-import { DEFAULT_BLACK } from "../../resources/values/colors";
+import { useStyle } from "./styles";
+import { useTheme } from "@react-navigation/native";
 
 interface SectionHeaderProps {
   title: string;
@@ -10,19 +10,24 @@ interface SectionHeaderProps {
   valueColor?: string;
 }
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({ title, value, valueColor = DEFAULT_BLACK }) => (
-  <View style={styles.viewContainer}>
-    <Text style={styles.text}>
-      {title}
-    </Text>
-    { 
-      value && 
-      <Text style={{...styles.text, color: valueColor}}>
-        {value}
+const SectionHeader: React.FC<SectionHeaderProps> = ({ title, value, valueColor }) => {
+  const styles = useStyle();
+  const { colors } = useTheme();
+
+  return (
+    <View style={styles.viewContainer}>
+      <Text style={styles.text}>
+        {title}
       </Text>
-    }
-    
-  </View>
-)
+      { 
+        value && 
+        <Text style={{...styles.text, color: valueColor || colors.text }}>
+          {value}
+        </Text>
+      }
+      
+    </View>
+  )
+}
 
 export default SectionHeader;

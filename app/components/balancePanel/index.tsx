@@ -1,9 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
-import { styles } from "./styles";
+import { useStyle } from "./styles";
 import { convertToMoney } from "../../utils/string.util";
-import { DEFAULT_BLACK, DEFAULT_RED } from "../../resources/values/colors";
+import { DEFAULT_RED } from "../../resources/values/colors";
 
 interface BalancePanelProps {
   budget: number;
@@ -11,12 +12,16 @@ interface BalancePanelProps {
 }
 
 const BalancePanel: React.FC<BalancePanelProps> = ({ budget, totalExpenses }) => {
+  const styles = useStyle();
+  const { colors } = useTheme();
+  
   const balance = budget - totalExpenses;
+
   return (
     <View style={styles.componentView}>
       <View>
         <Text style={styles.balanceTitle}>Balance</Text>
-        <Text style={{...styles.balanceText, color: balance > 0 ? DEFAULT_BLACK : DEFAULT_RED}}>{convertToMoney(balance)}</Text>
+        <Text style={{...styles.balanceText, color: balance > 0 ? colors.text : DEFAULT_RED}}>{convertToMoney(balance)}</Text>
       </View>
       <View>
         <Text style={styles.textStyle}>Budget <Text style={styles.boldTextStyle}>{convertToMoney(budget)}</Text></Text>

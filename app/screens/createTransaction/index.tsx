@@ -1,13 +1,14 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Input, Select } from "native-base";
+import { useTheme } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 
 import Transaction from '../../models/schemas/TransactionSchema';
 import RootStackParamList from '../../models/interfaces/RootScreensParams';
 
-import { styles } from './styles';
+import { useStyle } from './styles';
 import { convertToMoney } from '../../utils/string.util';
 import useCreateTransaction from './hooks/useCreateTransaction';
 import { listImgBase64 } from '../../resources/static/categoriesImages';
@@ -28,6 +29,9 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
     onChange, 
     onButtonPress,
   } = useCreateTransaction({ route, navigation });
+
+  const styles = useStyle();
+  const { colors } = useTheme();
 
   const renderItem = (transaction: Transaction) => (
     <TouchableOpacity key={transaction._id!.toString()} onPress={() => onPressSearchItem(transaction)}>

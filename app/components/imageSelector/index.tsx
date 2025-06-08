@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
-import { styles } from './styles';
+import { useStyle } from './styles';
 import { DEFAULT_BUTTON_COLOR } from '../../resources/values/colors';
 
 import ImageBase64 from "../../models/interfaces/ImageBase64";
@@ -13,6 +13,7 @@ interface ImageSelectorProps {
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, selectedImage, onPress }) => {
+  const styles = useStyle();
   const [imageSelected, setImageSelected] = useState<ImageBase64>()
 
   useEffect(() => {

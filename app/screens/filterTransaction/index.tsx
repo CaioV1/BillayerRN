@@ -1,14 +1,19 @@
 import React from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import RootStackParamList from "../../models/interfaces/RootScreensParams";
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, Text, TouchableOpacity } from "react-native";
 import { Input, Select } from "native-base";
-import useFilter from "./hooks/useFilter";
-import { BottomButton, ItemFlatList, SectionHeader } from "../../components";
-import { convertToMoney } from "../../utils/string.util";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import Transaction from "../../models/schemas/TransactionSchema";
+import RootStackParamList from "../../models/interfaces/RootScreensParams";
+
+import { convertToMoney } from "../../utils/string.util";
+
 import { listImgBase64 } from "../../resources/static/categoriesImages";
+
+import { BottomButton, ItemFlatList, SectionHeader } from "../../components";
+
 import { styles } from "./styles";
+import useFilter from "./hooks/useFilter";
 
 type FilterTransactionScreenProps = NativeStackScreenProps<RootStackParamList, 'FilterTransaction'>;
 
