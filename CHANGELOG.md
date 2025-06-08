@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Dark mode theme
+
 ## [1.5.0] - 2025-01-24
 
 ### Added

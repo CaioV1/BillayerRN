@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 import IConfig from "../models/interfaces/Config";
 import Config from "../models/schemas/ConfigSchema";
 import Category from "../models/schemas/CategorySchema";
+import ContextProviderProps from "../models/interfaces/ContextProviderProps";
 
 import { RealmContext } from "../configs/RealmContext"
 import { getNextMonthDate } from "../utils/date.util";
@@ -19,11 +20,7 @@ export const AppConfigContext = createContext({
   setAppConfig: (_config: IConfig) => {},
 });
 
-interface AppConfigContextProviderProps {
-  children: React.ReactNode;
-}
-
-const AppConfigContextProvider: React.FC<AppConfigContextProviderProps> = ({ children }) => {
+const AppConfigContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const realm = useRealm();
   const response = useQuery(Config);
   const listCategory = useQuery(Category);
