@@ -28,33 +28,34 @@ const App: React.FC = () => {
   const { RealmProvider } = RealmContext;
 
   return (
-    <ThemeContextProvider>
-      <Navigation>
-        <RealmProvider>
-          <NativeBaseProvider theme={fieldsTheme}>
-            <AppConfigContextProvider>
-              <Stack.Navigator>
-                {routes.map((route) => (
-                  <Stack.Screen
-                    key={route.name}
-                    name={route.name} 
-                    component={route.component}
-                    options={{
-                      title: route.title,
-                      headerBackTitleVisible: false,
-                      headerTintColor: DEFAULT_BLACK,
-                      headerStyle: {
-                        backgroundColor: DEFAULT_BUTTON_COLOR
-                      }
-                    }}
-                  />
-                ))}
-              </Stack.Navigator>
-            </AppConfigContextProvider>
-          </NativeBaseProvider>
-        </RealmProvider>
-      </Navigation>
-    </ThemeContextProvider>
+    <RealmProvider>
+      <ThemeContextProvider>
+        <Navigation>
+          
+            <NativeBaseProvider theme={fieldsTheme}>
+              <AppConfigContextProvider>
+                <Stack.Navigator>
+                  {routes.map((route) => (
+                    <Stack.Screen
+                      key={route.name}
+                      name={route.name} 
+                      component={route.component}
+                      options={{
+                        title: route.title,
+                        headerBackTitleVisible: false,
+                        headerTintColor: DEFAULT_BLACK,
+                        headerStyle: {
+                          backgroundColor: DEFAULT_BUTTON_COLOR
+                        }
+                      }}
+                    />
+                  ))}
+                </Stack.Navigator>
+              </AppConfigContextProvider>
+            </NativeBaseProvider>
+        </Navigation>
+      </ThemeContextProvider>
+    </RealmProvider>
   );
 }
 

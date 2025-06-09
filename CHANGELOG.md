@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.6.1] - 2025-06-09
+
+### Changed
+
+- Persist theme color (dark mode) into the realm database
+
 ## [1.6.0] - 2025-06-08
 
 ### Added
