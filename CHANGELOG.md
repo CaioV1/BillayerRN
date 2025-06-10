@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Instaled icons lib react-native-vector-icons
+
 ## [1.6.1] - 2025-06-09
 
 ### Changed

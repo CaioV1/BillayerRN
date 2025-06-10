@@ -40,7 +40,7 @@ export const darkTheme: Theme = {
   dark: true,
   colors: {
     primary: '#6e6e6e',
-    background: '#403f3f',
+    background: '#1f1f1e',
     border: '#FFFFFF',
     card: '#dedcdc',
     notification: '#000000',
