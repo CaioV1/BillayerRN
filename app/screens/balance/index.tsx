@@ -30,6 +30,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
   } = useBalance(navigation);
 
   const renderCategories = (balance: Balance) => {
+    console.log(balance.category.iconId)
     return (
       <TouchableOpacity key={balance._id!.toString()} onPress={() => navigation.navigate('DetailCategory', { balance })}>
         <ItemFlatList           

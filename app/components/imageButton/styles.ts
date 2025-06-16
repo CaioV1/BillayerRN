@@ -13,7 +13,7 @@ export const useStyle = () => {
     imageView: {
       height: 70,
       width: 70,
-      backgroundColor: DEFAULT_BUTTON_COLOR,
+      backgroundColor: colors.card,
       display: 'flex',
       alignItems: "center",
       justifyContent: "center",
