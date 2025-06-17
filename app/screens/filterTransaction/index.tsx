@@ -14,6 +14,7 @@ import { BottomButton, ItemFlatList, SectionHeader } from "../../components";
 
 import { styles } from "./styles";
 import useFilter from "./hooks/useFilter";
+import { DEFAULT_CATEGORY_ICONS } from "../../resources/values/consts";
 
 type FilterTransactionScreenProps = NativeStackScreenProps<RootStackParamList, 'FilterTransaction'>;
 
@@ -47,7 +48,7 @@ const FilterTransaction: React.FC<FilterTransactionScreenProps> = ({ navigation 
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
+        icon={DEFAULT_CATEGORY_ICONS.find((image) => image.id === transaction.balance.category.iconId)?.name}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

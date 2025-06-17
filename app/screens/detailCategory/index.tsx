@@ -39,9 +39,9 @@ const DetailCategory: React.FC<DetailCategoryProps> = ({ route, navigation }) =>
         <Text style={styles.categoryBudgetText}>{convertToMoney(balance.category.budget)}</Text>
       </View>
       <View style={styles.viewImageButtons}>
-        <ImageButton buttonTitle='Add Transaction' imageBase64={listMenu[2].data} onPress={() => navigation.navigate('CreateTransaction', { balance })} />
-        <ImageButton buttonTitle='Edit' imageBase64={listMenu[5].data} onPress={() => navigation.navigate('CreateCategory', { category: balance.category })} />
-        <ImageButton buttonTitle='Delete' imageBase64={listMenu[6].data} onPress={() => onDeleteButtonPress()} />
+        <ImageButton buttonTitle='Add Transaction' imageName='post-add' onPress={() => navigation.navigate('CreateTransaction', { balance })} />
+        <ImageButton buttonTitle='Edit' imageName='edit' onPress={() => navigation.navigate('CreateCategory', { category: balance.category })} />
+        <ImageButton buttonTitle='Delete' imageName='delete' onPress={() => onDeleteButtonPress()} />
       </View>
       <Tab.Root totalTabs={TOTAL_TABS}>
         <Tab.Header>

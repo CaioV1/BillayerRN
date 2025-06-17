@@ -17,10 +17,7 @@ interface ImageButtonProps {
 const ImageButton: React.FC<ImageButtonProps> = ({ buttonTitle, imageName, imageBase64, size = 40, onPress, lastItem = false }) => {
   const styles = useStyle();
   const { colors } = useTheme();
-  useEffect(() => {
-    // console.log(Object.keys(Icon.getRawGlyphMap()).filter(item => item.includes('upload')))
-    console.log(Object.keys(Material.getRawGlyphMap()).filter(item => item.includes('dark')))
-  }, []);
+
   return (
     <TouchableOpacity onPress={onPress} style={{...styles.componentView, marginRight: lastItem ? 20 : 0 }}>
       <View style={styles.imageView}>

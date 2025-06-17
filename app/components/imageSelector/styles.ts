@@ -7,6 +7,7 @@ export const useStyle = () => {
   return StyleSheet.create({
     componentView: { 
       flex: 1,
+      flexWrap: 'wrap',
       flexDirection: 'row',
       alignItems: "center",
       justifyContent: "center"

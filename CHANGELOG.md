@@ -6,6 +6,11 @@
 
 - Instaled icons lib react-native-vector-icons
 
+### Updated
+
+- Mapped current icons with react-native-vector-icons
+- Update category schema with iconName
+
 ## [1.6.1] - 2025-06-09
 
 ### Changed

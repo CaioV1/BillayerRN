@@ -28,7 +28,7 @@ export const fieldsTheme = extendTheme({
 export const lightTheme: Theme = {
   dark: false,
   colors: {
-    primary: '#CCCCCC',
+    primary: '#FFFFFF',
     background: '#FFFFFF',
     border: '#000000',
     card: '#e3ba62',
@@ -40,7 +40,7 @@ export const lightTheme: Theme = {
 export const darkTheme: Theme = {
   dark: true,
   colors: {
-    primary: '#6e6e6e',
+    primary: '#e3ba62',
     background: '#1f1f1e',
     border: '#FFFFFF',
     card: '#4d4c4c',

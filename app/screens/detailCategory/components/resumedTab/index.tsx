@@ -6,6 +6,7 @@ import Balance from "../../../../models/schemas/BalanceSchema";
 import { convertToMoney } from "../../../../utils/string.util";
 import { ItemFlatList, SectionHeader } from "../../../../components";
 import { listImgBase64 } from "../../../../resources/static/categoriesImages";
+import { DEFAULT_CATEGORY_ICONS } from "../../../../resources/values/consts";
 
 interface ResumedTabComponentProps {
   filteredBalanceList: Results<Balance>;
@@ -18,7 +19,7 @@ const ResumedTabComponent: React.FC<ResumedTabComponentProps> = ({ filteredBalan
       key={item._id!.toString()}
       title={item.dueDate} 
       value={convertToMoney(item.totalExpenses)} 
-      icon={listImgBase64.find((imgBase64) => imgBase64.id === item.category.iconId)?.data}
+      icon={DEFAULT_CATEGORY_ICONS.find((image) => image.id === item.category.iconId)?.name}
     />
   )
 
