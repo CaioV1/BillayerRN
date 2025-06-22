@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { useStyle } from "./styles";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Material from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from "@react-navigation/native";
+import Material from 'react-native-vector-icons/MaterialIcons';
+
+import { useStyle } from "./styles";
 
 interface ImageButtonProps {
   buttonTitle: string;

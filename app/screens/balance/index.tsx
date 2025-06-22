@@ -8,8 +8,6 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams"
 import MainMenu from "./components/mainMenu";
 import { BalancePanel, ItemFlatList, SectionHeader } from "../../components";
 
-import { listImgBase64 } from "../../resources/static/categoriesImages";
-import { DEFAULT_CATEGORY_ICONS } from '../../resources/values/consts';
 import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR, DEFAULT_RED } from "../../resources/values/colors";
 
 import { styles } from "./styles";
@@ -37,7 +35,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
           title={balance.category.name} 
           value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
           valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
-          icon={DEFAULT_CATEGORY_ICONS.find((image) => image.id === balance.category.iconId)?.name}
+          icon={balance.category.iconId.toString()}
           subtitle={`Budget: ${convertToMoney(balance.category.budget)} \nExpenses: ${convertToMoney(balance.totalExpenses)} `} 
         />
       </TouchableOpacity>

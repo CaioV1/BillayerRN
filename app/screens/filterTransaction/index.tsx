@@ -8,8 +8,6 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams";
 
 import { convertToMoney } from "../../utils/string.util";
 
-import { listImgBase64 } from "../../resources/static/categoriesImages";
-
 import { BottomButton, ItemFlatList, SectionHeader } from "../../components";
 
 import { styles } from "./styles";
@@ -48,7 +46,7 @@ const FilterTransaction: React.FC<FilterTransactionScreenProps> = ({ navigation 
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={DEFAULT_CATEGORY_ICONS.find((image) => image.id === transaction.balance.category.iconId)?.name}
+        icon={transaction.balance.category.iconId.toString()}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>
