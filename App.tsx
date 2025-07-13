@@ -4,22 +4,25 @@ import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import routes from './app/routes';
 import { RealmContext } from './app/configs/RealmContext';
-import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR, fieldsTheme } from './app/resources/values/colors';
 import AppConfigContextProvider from './app/context/appConfig.context';
 import { ThemeContext, ThemeContextProvider } from './app/context/theme.context';
+
+import routes from './app/routes';
+import { DEFAULT_BLACK, DEFAULT_BUTTON_COLOR, nativeBaseLightTheme, nativeBaseDarkTheme } from './app/resources/values/colors';
 
 const Stack = createNativeStackNavigator();
 
 LogBox.ignoreAllLogs(true);
 
-const Navigation: React.FC<{children: ReactNode}> = ({ children }) => {
-  const { theme } = useContext(ThemeContext)
+const NavigationThemeContainer: React.FC<{children: ReactNode}> = ({ children }) => {
+  const { theme, scheme } = useContext(ThemeContext)
 
   return (
     <NavigationContainer theme={theme}>
-      {children}
+      <NativeBaseProvider theme={scheme === 'dark' ? nativeBaseDarkTheme : nativeBaseLightTheme}>
+        {children}
+      </NativeBaseProvider>
     </NavigationContainer>
   )
 }
@@ -30,30 +33,27 @@ const App: React.FC = () => {
   return (
     <RealmProvider>
       <ThemeContextProvider>
-        <Navigation>
-          
-            <NativeBaseProvider theme={fieldsTheme}>
-              <AppConfigContextProvider>
-                <Stack.Navigator>
-                  {routes.map((route) => (
-                    <Stack.Screen
-                      key={route.name}
-                      name={route.name} 
-                      component={route.component}
-                      options={{
-                        title: route.title,
-                        headerBackTitleVisible: false,
-                        headerTintColor: DEFAULT_BLACK,
-                        headerStyle: {
-                          backgroundColor: DEFAULT_BUTTON_COLOR
-                        }
-                      }}
-                    />
-                  ))}
-                </Stack.Navigator>
-              </AppConfigContextProvider>
-            </NativeBaseProvider>
-        </Navigation>
+        <NavigationThemeContainer>
+          <AppConfigContextProvider>
+            <Stack.Navigator>
+              {routes.map((route) => (
+                <Stack.Screen
+                  key={route.name}
+                  name={route.name} 
+                  component={route.component}
+                  options={{
+                    title: route.title,
+                    headerBackTitleVisible: false,
+                    headerTintColor: DEFAULT_BLACK,
+                    headerStyle: {
+                      backgroundColor: DEFAULT_BUTTON_COLOR
+                    }
+                  }}
+                />
+              ))}
+            </Stack.Navigator>
+          </AppConfigContextProvider>
+        </NavigationThemeContainer>
       </ThemeContextProvider>
     </RealmProvider>
   );

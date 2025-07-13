@@ -9,7 +9,8 @@
 ### Updated
 
 - Mapped current icons with react-native-vector-icons
-- Update category schema with iconName
+- Category schema with iconName
+- Update create category screen with search icon field
 
 ## [1.6.1] - 2025-06-09
 

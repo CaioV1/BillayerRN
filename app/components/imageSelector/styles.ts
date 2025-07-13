@@ -14,6 +14,7 @@ export const useStyle = () => {
     },
     imageView: { 
       margin: 15,
+      padding: 15,
       borderWidth: 1, 
       borderRadius: 15,
       backgroundColor: colors.card

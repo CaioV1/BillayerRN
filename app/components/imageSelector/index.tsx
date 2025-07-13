@@ -1,62 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Material from 'react-native-vector-icons/MaterialIcons';
+import { useTheme } from '@react-navigation/native';
+import { Input } from 'native-base';
 
 import { useStyle } from './styles';
-import { DEFAULT_BUTTON_COLOR } from '../../resources/values/colors';
-
-import ImageBase64 from "../../models/interfaces/ImageBase64";
-import { DEFAULT_CATEGORY_ICONS } from '../../resources/values/consts';
+import { DEFAULT_CATEGORY, SEARCH_TEXT_MINIMUM_LENGTH } from '../../resources/values/consts';
 
 interface ImageSelectorProps {
-  listImageInfo: Array<ImageBase64>;
-  selectedImage?: ImageBase64;
-  onPress: (imageInfo: ImageBase64) => void
+  selectedIcon?: number | string;
+  onPress: (imageInfo: string) => void
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({ listImageInfo, selectedImage, onPress }) => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ selectedIcon, onPress }) => {
   const styles = useStyle();
-  const [imageSelected, setImageSelected] = useState<ImageBase64>()
+  const { colors } = useTheme();
+  const [imageSelected, setImageSelected] = useState<string>()
   const [listImages, setListImage] = useState<string[]>([]);
+  const [searchIcon, setSearchIcon] = useState<string>('');
 
   useEffect(() => {
-    selectedImage && setImageSelected(selectedImage);
-    setListImage(Object.keys(Material.getRawGlyphMap()).filter(item => item.includes('error')))
-    // setListImage(DEFAULT_CATEGORY_ICONS.map(icon => icon.name))
+    if(typeof selectedIcon === 'number') setImageSelected(DEFAULT_CATEGORY.find(category => category.iconId === selectedIcon)?.iconName);
+    if(typeof selectedIcon === 'string') setImageSelected(selectedIcon);
   }, [])
 
   useEffect(() => {
-    console.log(listImages)
-  }, [listImages])
+    if(searchIcon.length > SEARCH_TEXT_MINIMUM_LENGTH) setListImage(Object.keys(Material.getRawGlyphMap()).filter(item => item.includes(searchIcon.toLowerCase().replace(' ', '-'))))
+  }, [searchIcon])
 
-  const onImageSelected = (item: ImageBase64) => {
+  const onImageSelected = (item: string) => {
     setImageSelected(item);
     onPress(item);
   }
 
-  const renderImages = (item: ImageBase64) => {
-    const imageViewStyle = imageSelected?.id === item.id ? { ...styles.imageView, backgroundColor: DEFAULT_BUTTON_COLOR } : styles.imageView;
+  const renderIcons = (item: string) => {
+    const imageViewStyle = imageSelected === item ? { ...styles.imageView, backgroundColor: colors.text } : styles.imageView;
 
     return (
-      <TouchableOpacity onPress={() => { onImageSelected(item) }} key={item.id}>
-        <View key={item.id} style={imageViewStyle}>
-          <Image style={styles.image} source={{ uri: item.data }} />
+      <TouchableOpacity onPress={() => { onImageSelected(item) }}>
+        <View style={imageViewStyle}>
+          <Material name={item} size={50} color={imageSelected === item ? colors.card : colors.text} />
         </View>
       </TouchableOpacity>
     )
   }
+
   return (
-    <View style={styles.componentView}>
-      <View>
-        { listImageInfo.filter((_i, index) => index % 2 == 1).map((item) => renderImages(item)) }
+    <>
+      <Input
+        fontSize={20} 
+        marginTop={10} 
+        marginBottom={5} 
+        marginX={5}
+        value={searchIcon}
+        variant="underlined" 
+        placeholder="Search icon" 
+        onChangeText={(text: string) => setSearchIcon(text)}
+      />
+      <View style={styles.componentView}>
+        {
+          searchIcon.length > SEARCH_TEXT_MINIMUM_LENGTH ? listImages.map(image => renderIcons(image)) : DEFAULT_CATEGORY.map(category => renderIcons(category.iconName!))
+        }
       </View>
-      <View>
-        { listImageInfo.filter((_i, index) => index % 2 == 0).map((item) => renderImages(item)) }
-      </View>
-      {/* {
-        listImages.map(image => (<Material name={image} size={50} color='#000000' />))
-      } */}
-    </View>
+    </>
   )
 }
 
