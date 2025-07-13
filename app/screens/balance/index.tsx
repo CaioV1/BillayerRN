@@ -34,7 +34,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
         <ItemFlatList           
           title={balance.category.name} 
           value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
-          valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
+          valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : undefined}
           icon={balance.category.iconId.toString()}
           subtitle={`Budget: ${convertToMoney(balance.category.budget)} \nExpenses: ${convertToMoney(balance.totalExpenses)} `} 
         />

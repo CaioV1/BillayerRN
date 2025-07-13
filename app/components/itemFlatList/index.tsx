@@ -21,6 +21,7 @@ const ItemFlatList: React.FC<ItemFlatListProps> = ({
   value, 
   icon, 
   subtitle, 
+  valueColor
 }) => {
   const styles = useStyle();
   const { colors } = useTheme();
@@ -36,7 +37,7 @@ const ItemFlatList: React.FC<ItemFlatListProps> = ({
       { subtitle && <Text style={styles.subtitleText}>{subtitle}</Text>}
     </View>
     <View style={styles.valueView}>
-      <Text style={styles.valueText}>{value}</Text>
+      <Text style={{...styles.valueText, color: valueColor || colors.text}}>{value}</Text>
     </View>
   </View>
   )
