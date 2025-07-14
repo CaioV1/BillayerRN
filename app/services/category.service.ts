@@ -10,7 +10,7 @@ import Transaction from "../models/schemas/TransactionSchema";
 export const createCategory = (realm: Realm, category: ICategory, dateToRenewBalance: string) => {
   const convertedCategory = {
     name: category.name!,
-    iconId: parseInt(category.iconId!.toString()),
+    iconName: category.iconName,
     budget: parseFloat(category.budget!.toString().replace(',', '.'))
   };
 
@@ -34,7 +34,7 @@ export const updateCategory = (realm: Realm, oldCategory: Category, newCategory:
     realm.create<Balance>('Balance', { ...currentBalance, budget: newBudget }, true);
     return realm.create<Category>('Category', { 
       name: newCategory.name!,
-      iconId: parseInt(newCategory.iconId!.toString()),
+      iconName: newCategory.iconName!,
       budget: newBudget,
       _id: oldCategory._id 
     }, true);

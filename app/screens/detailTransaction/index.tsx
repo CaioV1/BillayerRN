@@ -11,7 +11,6 @@ import { ImageButton } from "../../components";
 
 import { useStyle } from "./styles";
 import useDetailTransaction from "./hooks/useDetailTransaction";
-import { DEFAULT_CATEGORY_ICONS } from "../../resources/values/consts";
 
 type DetailTransactionProps = NativeStackScreenProps<RootStackParamList, 'DetailTransaction'>;
 
@@ -24,7 +23,7 @@ const DetailTransaction: React.FC<DetailTransactionProps> = ({ route, navigation
     <View style={styles.viewContainer}>
       <View style={styles.viewHeaderTexts}>
         <View style={styles.viewIcon}>
-          <Material name={DEFAULT_CATEGORY_ICONS.find(image => image.id === transaction.balance.category.iconId)?.name || 'error'} size={40} color={colors.text} />
+          <Material name={transaction.balance.category.iconName || 'error'} size={40} color={colors.text} />
         </View>
         <Text style={styles.transactionNameText}>{transaction.name}</Text>
         <Text style={styles.transactionValueText}>{convertToMoney(transaction.value)}</Text>

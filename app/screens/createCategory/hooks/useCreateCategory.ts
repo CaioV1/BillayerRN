@@ -34,7 +34,7 @@ const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStack
 
   const validateFields = (): string | void => {
     if(!category?.name) return "Please fill the category's name";
-    if(!category?.iconId) return "Please select the icon";
+    if(!category?.iconName) return "Please select the icon";
     if(!category?.budget) return "Please fill the category's budget";
 
     const pattern = /^-?\d+((\.|\,)\d+)?$/;
@@ -53,7 +53,7 @@ const useCreateCategory = ({route, navigation}: NativeStackScreenProps<RootStack
       _id: paramCategory?._id,
       name: category!.name!,
       budget: category!.budget!,
-      iconId: category!.iconId!
+      iconName: category!.iconName!
     }
 
     if(paramCategory){

@@ -25,8 +25,8 @@ export default class Category extends Realm.Object<Category> implements ICategor
     properties: {
       _id: { type: 'uuid', default: () => new Realm.BSON.UUID() },
       name: 'string',
-      iconId: 'int',
-      iconName: 'string?',
+      iconId: 'int?',
+      iconName: 'string',
       budget: 'double'
     },
     primaryKey: '_id'

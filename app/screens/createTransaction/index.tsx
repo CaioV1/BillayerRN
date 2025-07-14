@@ -36,7 +36,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={transaction.balance.category.iconId.toString()}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

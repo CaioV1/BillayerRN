@@ -5,7 +5,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 
 import { styles } from "./styles";
 import { ThemeContext } from "../../../../context/theme.context";
-import { listMenu } from "../../../../resources/static/menuBalance";
 
 import ImageButton from "../../../../components/imageButton";
 import RootStackParamList from "../../../../models/interfaces/RootScreensParams"

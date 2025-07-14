@@ -4,7 +4,6 @@ import { useTheme } from "@react-navigation/native";
 import Material from 'react-native-vector-icons/MaterialIcons';
 
 import useStyle from "./styles";
-import { DEFAULT_CATEGORY_ICONS } from "../../resources/values/consts";
 
 interface ItemFlatListProps {
   title: string;
@@ -29,8 +28,7 @@ const ItemFlatList: React.FC<ItemFlatListProps> = ({
   return (
     <View style={styles.mainContainer}>
     <View style={styles.iconView}>
-      <Material name={DEFAULT_CATEGORY_ICONS.find((image) => image.id.toString() === icon)?.name || 'error'} size={30} color={colors.text} />
-      {/* <Image style={styles.iconImage} source={icon ? {uri: icon} : require('../../../public/not_found.png')} /> */}
+      <Material name={icon!} size={30} color={colors.text} />
     </View>
     <View style={styles.titleView}>
       <Text style={styles.titleText}>{title}</Text>

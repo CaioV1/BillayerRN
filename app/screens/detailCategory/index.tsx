@@ -4,8 +4,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 import RootStackParamList from "../../models/interfaces/RootScreensParams"
 
-import { listMenu } from "../../resources/static/menuBalance";
-
 import { convertToMoney } from "../../utils/string.util";
 
 import { ImageButton, Tab } from "../../components";

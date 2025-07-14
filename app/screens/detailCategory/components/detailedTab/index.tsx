@@ -7,7 +7,6 @@ import { ItemFlatList, SectionHeader } from "../../../../components";
 
 import Transaction from "../../../../models/schemas/TransactionSchema";
 import RootStackParamList from "../../../../models/interfaces/RootScreensParams";
-import { DEFAULT_CATEGORY_ICONS } from "../../../../resources/values/consts";
 
 interface DetailedTabComponentProps {
   navigation: NativeStackNavigationProp<RootStackParamList, 'DetailCategory' | 'Transactions'>;
@@ -25,7 +24,7 @@ const DetailedTabComponent: React.FC<DetailedTabComponentProps> = ({ navigation,
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={transaction.balance.category.iconId.toString()}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

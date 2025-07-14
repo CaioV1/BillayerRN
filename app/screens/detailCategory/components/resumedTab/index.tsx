@@ -17,7 +17,7 @@ const ResumedTabComponent: React.FC<ResumedTabComponentProps> = ({ filteredBalan
       key={item._id!.toString()}
       title={item.dueDate} 
       value={convertToMoney(item.totalExpenses)} 
-      icon={item.category.iconId.toString()}
+      icon={item.category.iconName}
     />
   )
 

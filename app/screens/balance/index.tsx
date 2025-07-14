@@ -35,7 +35,7 @@ const BalanceScreen: React.FC<BalanceScreenProps> = ({ navigation }) => {
           title={balance.category.name} 
           value={convertToMoney(balance.category.budget - balance.totalExpenses)} 
           valueColor={(balance.category.budget - balance.totalExpenses) < 0 ? DEFAULT_RED : undefined}
-          icon={balance.category.iconId.toString()}
+          icon={balance.category.iconName}
           subtitle={`Budget: ${convertToMoney(balance.category.budget)} \nExpenses: ${convertToMoney(balance.totalExpenses)} `} 
         />
       </TouchableOpacity>

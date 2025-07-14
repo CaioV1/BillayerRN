@@ -1,16 +1,28 @@
 # Changelog
 
-## [Unreleased]
+<!-- ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Removed -->
+
+## [1.7.0] - 2025-07-14
 
 ### Added
 
 - Instaled icons lib react-native-vector-icons
 
-### Updated
+### Changed
 
 - Mapped current icons with react-native-vector-icons
 - Category schema with iconName
 - Update create category screen with search icon field
+
+### Removed
+
+- Base64 list icons
 
 ## [1.6.1] - 2025-06-09
 

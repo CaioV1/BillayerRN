@@ -10,7 +10,7 @@ import { convertToMoney } from "../../utils/string.util";
 import useBalanceHistory from "./hooks/useBalanceHistory";
 import { ItemFlatList, SectionHeader } from "../../components";
 
-import { DEFAULT_BLACK, DEFAULT_RED } from "../../resources/values/colors";
+import { DEFAULT_RED } from "../../resources/values/colors";
 
 type BalanceHistoryProps = NativeStackScreenProps<RootStackParamList, 'BalanceHistory'>;
 
@@ -27,8 +27,8 @@ const BalanceHistory: React.FC<BalanceHistoryProps> = ({ navigation }) => {
       key={item._id!.toString()}
       title={item.category.name} 
       value={convertToMoney(item.budget - item.totalExpenses)} 
-      valueColor={(item.budget - item.totalExpenses) < 0 ? DEFAULT_RED : DEFAULT_BLACK}
-      icon={item.category.iconId.toString()}
+      valueColor={(item.budget - item.totalExpenses) < 0 ? DEFAULT_RED : colors.text}
+      icon={item.category.iconName}
       subtitle={`Budget: ${convertToMoney(item.budget)} \nExpenses: ${convertToMoney(item.totalExpenses)} `} 
     />
   )

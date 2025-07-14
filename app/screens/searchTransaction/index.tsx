@@ -26,7 +26,7 @@ const SearchTransaction: React.FC<SearchTransactionProps> = ({ navigation }) => 
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={transaction.balance.category.iconId.toString()}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

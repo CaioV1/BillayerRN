@@ -10,7 +10,7 @@ import useTransaction from "../../hooks/useTransaction";
 import { convertToMoney } from "../../utils/string.util";
 import { BottomButton, ItemFlatList, SearchInput, SectionHeader } from "../../components";
 
-import { DEFAULT_CATEGORY_ICONS, SEARCH_TEXT_MINIMUM_LENGTH } from "../../resources/values/consts";
+import { SEARCH_TEXT_MINIMUM_LENGTH } from "../../resources/values/consts";
 
 type TransactionsScreenProps = NativeStackScreenProps<RootStackParamList, 'Transactions'>;
 
@@ -48,7 +48,7 @@ const TransactionsScreen: React.FC<TransactionsScreenProps> = ({ navigation }) =
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={transaction.balance.category.iconId.toString()}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>
