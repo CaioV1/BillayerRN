@@ -8,6 +8,7 @@ import { convertToMoney } from "../../utils/string.util";
 import { SEARCH_TEXT_MINIMUM_LENGTH } from "../../resources/values/consts";
 
 import { styles } from "./styles";
+import { useTheme } from "@react-navigation/native";
 
 interface SearchInputProps {
   searchValue: string;
@@ -30,6 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   totalValue = 0,
   onClosePress
 }) => {
+  const { colors } = useTheme()
   return (
     <>
       <Input
@@ -45,7 +47,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         InputRightElement={
           onClosePress && 
           <TouchableOpacity onPress={onClosePress}>
-            <CloseIcon size='5' color='black' />
+            <CloseIcon size='5' color={colors.text} />
           </TouchableOpacity>
         }
       />

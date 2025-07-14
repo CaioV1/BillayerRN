@@ -8,7 +8,6 @@ import RootStackParamList from "../../models/interfaces/RootScreensParams";
 import { ItemFlatList, SearchInput } from "../../components";
 import useTransaction from "../../hooks/useTransaction";
 import { convertToMoney } from "../../utils/string.util";
-import { listImgBase64 } from "../../resources/static/categoriesImages";
 
 import { styles } from './styles';
 
@@ -27,7 +26,7 @@ const SearchTransaction: React.FC<SearchTransactionProps> = ({ navigation }) => 
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

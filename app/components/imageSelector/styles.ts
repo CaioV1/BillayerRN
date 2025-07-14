@@ -7,12 +7,14 @@ export const useStyle = () => {
   return StyleSheet.create({
     componentView: { 
       flex: 1,
+      flexWrap: 'wrap',
       flexDirection: 'row',
       alignItems: "center",
       justifyContent: "center"
     },
     imageView: { 
       margin: 15,
+      padding: 15,
       borderWidth: 1, 
       borderRadius: 15,
       backgroundColor: colors.card

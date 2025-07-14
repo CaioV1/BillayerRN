@@ -26,7 +26,8 @@ export const useStyle = () => {
     viewIcon: {
       borderRadius: 30,
       marginBottom: 30,
-      backgroundColor: DEFAULT_GRAY,
+      padding: 20,
+      backgroundColor: colors.card,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

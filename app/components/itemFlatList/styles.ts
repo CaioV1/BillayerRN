@@ -17,8 +17,9 @@ const useStyle = () => {
     },
     iconView: {
       width: '12%',
-      borderRadius: 30,
-      backgroundColor: DEFAULT_GRAY,
+      padding: 7,
+      borderRadius: 20,
+      backgroundColor: colors.card,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

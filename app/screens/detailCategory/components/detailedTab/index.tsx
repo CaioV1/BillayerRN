@@ -2,8 +2,6 @@ import React from "react";
 import { SectionList, TouchableOpacity } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { listImgBase64 } from "../../../../resources/static/categoriesImages";
-
 import { convertToMoney } from "../../../../utils/string.util";
 import { ItemFlatList, SectionHeader } from "../../../../components";
 
@@ -26,7 +24,7 @@ const DetailedTabComponent: React.FC<DetailedTabComponentProps> = ({ navigation,
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>

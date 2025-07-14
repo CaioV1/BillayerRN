@@ -4,14 +4,12 @@ import { Input, Select } from "native-base";
 import { useTheme } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-
 import Transaction from '../../models/schemas/TransactionSchema';
 import RootStackParamList from '../../models/interfaces/RootScreensParams';
 
 import { useStyle } from './styles';
 import { convertToMoney } from '../../utils/string.util';
 import useCreateTransaction from './hooks/useCreateTransaction';
-import { listImgBase64 } from '../../resources/static/categoriesImages';
 import { BottomButton, ItemFlatList, SearchInput } from '../../components';
 
 type CreateTransactionScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateTransaction'>;
@@ -38,7 +36,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
       <ItemFlatList 
         title={transaction.name} 
         value={convertToMoney(transaction.value)} 
-        icon={listImgBase64.find((imgBase64) => imgBase64.id === transaction.balance.category.iconId)?.data}
+        icon={transaction.balance.category.iconName}
         subtitle={transaction.createdAt} 
       />
     </TouchableOpacity>
@@ -86,7 +84,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
             fontSize={20}
             marginTop={10}
             marginX={5}
-            selectedValue={transaction?.balance?._id.toString()}
+            selectedValue={transaction?.balance?._id?.toString()}
             accessibilityLabel="Category" 
             placeholder="Category" 
             variant="underlined"
@@ -94,7 +92,7 @@ const CreateTransactionScreen: React.FC<CreateTransactionScreenProps> = ({ route
           >
               {
                 listBalance.map((balance) => 
-                  <Select.Item key={balance?._id.toString()} label={balance.category.name} value={balance._id.toString()} />
+                  balance && <Select.Item key={balance._id!.toString()} label={balance.category.name} value={balance._id!.toString()} />
                 )
               }
           </Select>
