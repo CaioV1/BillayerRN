@@ -70,34 +70,39 @@ export const deleteTransaction = (realm: Realm, transaction: Transaction) => {
   });
 }
 
-export const importData = (realm: Realm, listTransaction: Array<ITransaction>, setAppConfig: (config: IConfig) => void) => {
-  const tempListCategory = listTransaction.reduce((acc, currentValue) => {
-    const foundCategory = acc.find(category => category._id === currentValue.balance.category._id);
-    if(!foundCategory) acc.push(currentValue.balance.category);
-    return acc;
-  }, [] as Array<ICategory>);
+export const importData = (
+  realm: Realm, 
+  balancesFromFile: Balance[], 
+  categoriesFromFile: Category[], 
+  transactionsFromFile: Transaction[], 
+  setAppConfig: (config: IConfig) => void
+) => {
+  // const tempListCategory = listTransaction.reduce((acc, currentValue) => {
+  //   const foundCategory = acc.find(category => category._id === currentValue.balance.category._id);
+  //   if(!foundCategory) acc.push(currentValue.balance.category);
+  //   return acc;
+  // }, [] as Array<ICategory>);
 
-  const tempListBalance = listTransaction.reduce((acc, currentValue) => {
-    const foundBalance = acc.find(balance => balance._id === currentValue.balance._id);
-    if(!foundBalance) acc.push(currentValue.balance);
-    return acc;
-  }, [] as Array<IBalance>);
+  // const tempListBalance = listTransaction.reduce((acc, currentValue) => {
+  //   const foundBalance = acc.find(balance => balance._id === currentValue.balance._id);
+  //   if(!foundBalance) acc.push(currentValue.balance);
+  //   return acc;
+  // }, [] as Array<IBalance>);
 
   let lastDueDate: string = '';
 
   realm.write(() => {
-    tempListCategory.forEach((category) => {
+    categoriesFromFile.forEach((category) => {
       realm.create(Category.name, {
         ...category,
-        iconName: DEFAULT_CATEGORY_ICONS.find(icon => icon.id === category.iconId)!.name,
         _id: new Realm.BSON.UUID(category._id)
       });
     });
 
-    const listCategory = realm.objects<Category>(Category.name);
+    const categoriesFromRealm = realm.objects<Category>(Category.name);
 
-    tempListBalance.forEach((balance) => {
-      const category = listCategory.find(category => category._id == balance.category._id);
+    balancesFromFile.forEach((balance) => {
+      const category = categoriesFromRealm.find(category => category._id == balance.category._id);
       realm.create(Balance.name, {
         ...balance,
         category,
@@ -105,10 +110,10 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
       });
     });
 
-    const listBalance = realm.objects<Balance>(Balance.name);
+    const balancesFromRealm = realm.objects<Balance>(Balance.name);
 
-    listTransaction.forEach((transaction) => {
-      const balance = listBalance.find(balance => balance._id == transaction.balance._id);
+    transactionsFromFile.forEach((transaction) => {
+      const balance = balancesFromRealm.find(balance => balance._id == transaction.balance._id);
       realm.create(Transaction.name, {
         ...transaction,
         balance,
@@ -116,8 +121,9 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
       });
     });
 
-    lastDueDate = listTransaction[listTransaction.length - 1].balance.dueDate;
+    lastDueDate = transactionsFromFile[transactionsFromFile.length - 1].balance.dueDate;
 
+    //TODO Importar o schema config também para pegar a data de renovação.
     const newAppConfig = realm.create<Config>(Config.name, {
       darkTheme: true,
       dayToRenewBalance: '20',
@@ -126,17 +132,17 @@ export const importData = (realm: Realm, listTransaction: Array<ITransaction>, s
 
     setAppConfig(newAppConfig);
 
-    if(!isDateSameOrAfterToday(lastDueDate)){
-      listCategory.forEach((category) => {
-        realm.create(Balance.name, {
-          category,
-          budget: category.budget,
-          totalExpenses: 0,
-          dueDate: newAppConfig.dateToRenewBalance,
-        });
-      });
-    }
+    // if(!isDateSameOrAfterToday(lastDueDate)){
+    //   categoriesFromRealm.forEach((category) => {
+    //     realm.create(Balance.name, {
+    //       category,
+    //       budget: category.budget,
+    //       totalExpenses: 0,
+    //       dueDate: newAppConfig.dateToRenewBalance,
+    //     });
+    //   });
+    // }
   });
 
-  fillOutBalancesByCategories(realm, lastDueDate);
+  // fillOutBalancesByCategories(realm, lastDueDate);
 }
